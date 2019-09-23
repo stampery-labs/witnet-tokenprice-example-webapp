@@ -1,12 +1,15 @@
 <template>
   <div>
-    Home component
+    <Timeline/>
   </div>
 </template>
 
 <script>
+import Timeline from '@/components/Timeline.vue'
 
 export default {
-  name: 'home'
+  components: {
+    Timeline
+  }
 }
 </script>

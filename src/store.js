@@ -3,12 +3,47 @@ import Vuex from 'vuex'
 import { getWeb3, checkMetamaskStatus } from './utils'
 
 Vue.use(Vuex)
-
+const bets = [{
+  address: '0x97BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '3',
+  ticker: 'eth'
+},
+{
+  address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '2',
+  ticker: 'link'
+},
+{
+  address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '1',
+  ticker: 'rep'
+}
+]
 export default new Vuex.Store({
   state: {
     web3: null,
     metamaskPolling: true,
-    metamaskError: 'unlock'
+    metamaskError: 'unlock',
+    polls: [
+      {
+        type: 'open',
+        color: 'green',
+        bets,
+        barChartData: bets
+      },
+      {
+        type: 'timelocked',
+        color: 'blue',
+        bets,
+        barChartData: bets
+      },
+      {
+        type: 'finished',
+        color: 'red',
+        bets,
+        barChartData: bets
+      }
+    ]
   },
   mutations: {
     setWeb3 (state, { web3Instance }) {
