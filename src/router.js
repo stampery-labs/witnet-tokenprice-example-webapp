@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import cookie from 'js-cookie'
+
 import Home from './views/Home.vue'
+import Disclaimer from './views/Disclaimer'
 
 Vue.use(Router)
 
@@ -9,15 +12,19 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        if (cookie.get('seen')) {
+          next()
+        } else {
+          next('/disclaimer')
+        }
+      }
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+      path: '/disclaimer',
+      name: 'disclaimer',
+      component: Disclaimer
     }
   ]
 })
