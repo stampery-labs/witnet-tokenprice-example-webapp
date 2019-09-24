@@ -1,36 +1,40 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
+    <MetamaskError v-if="metamaskError && !wait" :type="metamaskError" />
+    <router-view />
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import { mapState } from 'vuex'
+
+import MetamaskError from '@/components/MetamaskError'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MetamaskError
   },
   data: () => ({
-    //
-  })
+    wait: false
+  }),
+  beforeMount () {
+    this.wait = true
+
+    setTimeout(() => {
+      this.wait = false
+    }, 1000)
+  },
+  computed: {
+    ...mapState({
+      metamaskError: state => state.metamaskError
+    })
+  },
+  beforeCreate () {
+    this.$store.dispatch('getWeb3')
+    setInterval(() => {
+      this.$store.dispatch('checkMetamaskStatus')
+    }, 1000)
+  }
 }
 </script>
