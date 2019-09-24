@@ -76,10 +76,12 @@ export default new Vuex.Store({
       } catch (error) {
         context.commit('setMetamaskError', { type: 'install' })
       }
-    }
-  },
-  async fetchWeb3 (context) {
+    },
 
+    bet (context, { amount, ticker }) {
+      console.log(`Betting ${amount} to ${ticker}`)
+    },
+
+    async fetchWeb3 (context) {}
   }
-
 })

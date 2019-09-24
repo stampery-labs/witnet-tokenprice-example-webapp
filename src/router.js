@@ -4,6 +4,7 @@ import cookie from 'js-cookie'
 
 import Home from './views/Home.vue'
 import Disclaimer from './views/Disclaimer'
+import Bet from './views/Bet'
 
 Vue.use(Router)
 
@@ -20,6 +21,11 @@ export default new Router({
           next('/disclaimer')
         }
       }
+    },
+    {
+      path: '/bet',
+      name: 'bet',
+      component: Bet
     },
     {
       path: '/disclaimer',
