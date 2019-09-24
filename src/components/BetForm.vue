@@ -1,29 +1,59 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <v-text-field
-      v-model="amount"
-      :rules="amountRules"
-      label="Amount"
-      type="number"
-      required
-    ></v-text-field>
-    <v-autocomplete
-      v-model="ticker"
-      :items="tickers"
-      :rules="tickerRules"
-      item-text="name"
-      item-value="nameid"
-      label="Ticker"
-      required
-    >
-      <template v-slot:selection="data">
-        {{ data.item.name }} - {{ data.item.symbol }}
-      </template>
-      <template v-slot:item="data">
-        {{ data.item.name }} - {{ data.item.symbol }}
-      </template>
-    </v-autocomplete>
-    <v-btn :disabled="!valid || submitting" class="mr-4" @click="submit">Bet</v-btn>
+    <v-overlay :value="confirmSubmission">
+      <v-card
+        light
+        max-width="400"
+        class="mx-auto"
+      >
+        <v-card-text>
+          <p class="title" v-if="ticker">
+            Confirm bet of {{ amount }} to {{ ticker.name }}?
+          </p>
+        </v-card-text>
+
+        <v-card-actions class="justify-center">
+          <v-btn color="primary" class="mr-4" @click="confirmSubmit">
+            Place bet
+          </v-btn>
+
+          <v-btn class="mr-4" @click="cancelSubmit">
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-overlay>
+
+    <div>
+      <v-text-field
+        v-model="amount"
+        :rules="amountRules"
+        label="Amount"
+        type="number"
+        required
+      ></v-text-field>
+      <v-autocomplete
+        v-model="ticker"
+        :items="tickers"
+        :rules="tickerRules"
+        item-text="name"
+        item-value="symbol"
+        label="Ticker"
+        return-object
+        required
+      >
+        <template v-slot:selection="data">
+          {{ formatTicker(data.item) }}
+        </template>
+        <template v-slot:item="data">
+          {{ formatTicker(data.item) }}
+        </template>
+      </v-autocomplete>
+
+      <v-btn :disabled="!valid || submitting" class="mr-4" @click="submit">
+        Bet
+      </v-btn>
+    </div>
   </v-form>
 </template>
 
@@ -34,6 +64,8 @@ import * as constants from '../constants'
 export default {
   data: () => {
     const data = {
+      show: false,
+      confirmSubmission: false,
       amountRules: [minimumAmount],
       tickerRules: [nonEmptyTicker],
       tickers
@@ -44,14 +76,27 @@ export default {
     return data
   },
   methods: {
-    submit (event) {
+    formatTicker (ticker) {
+      return `${ticker.name} - ${ticker.symbol}`
+    },
+
+    cancelSubmit () {
+      this.confirmSubmission = false
+    },
+
+    confirmSubmit () {
+      this.show = true
       this.$store.dispatch('bet', {
         amount: this.amount,
-        ticker: this.ticker
+        ticker: this.ticker.nameid
       })
 
       this.$refs.form.reset()
       resetData(this)
+    },
+
+    submit (event) {
+      this.confirmSubmission = true
     }
   }
 }
@@ -67,9 +112,10 @@ function nonEmptyTicker (ticker) {
 
 function resetData (data) {
   data.valid = false
-  data.ticker = ''
+  data.ticker = null
   data.amount = null
   data.submitting = false
+  data.confirmSubmission = false
 }
 </script>
 
