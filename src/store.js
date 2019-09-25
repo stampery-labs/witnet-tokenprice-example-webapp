@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getWeb3, checkMetamaskStatus } from './utils'
+import { getWeb3, checkMetamaskStatus } from './utils/index'
 
 Vue.use(Vuex)
 const bets = [{
