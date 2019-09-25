@@ -1,6 +1,11 @@
 <template>
   <div>
     <h2>Bet Form</h2>
+
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+    </ul>
+
     <v-card max-width="344" class="mx-auto">
       <v-card-text>
         <BetForm/>
