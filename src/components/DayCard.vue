@@ -4,7 +4,7 @@
       <div class="column left">
         <ResultList v-if="type ==='finished'"/>
         <div v-else class="not-finished">
-          <Counter/>
+          <Countdown />
           <GrandPrice/>
           <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
         </div>
@@ -28,7 +28,7 @@
 
 <script>
 import Graph from '@/components/Graph.vue'
-import Counter from '@/components/Counter.vue'
+import Countdown from '@/components/Countdown.vue'
 import GrandPrice from '@/components/GrandPrice.vue'
 import BetForm from '@/components/BetForm.vue'
 import YourBets from '@/components/YourBets.vue'
@@ -38,7 +38,7 @@ export default {
   name: 'dayCard',
   components: {
     Graph,
-    Counter,
+    Countdown,
     GrandPrice,
     BetForm,
     YourBets,
