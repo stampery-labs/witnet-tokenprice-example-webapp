@@ -67,8 +67,8 @@ export default {
     const data = {
       show: false,
       confirmSubmission: false,
-      amountRules: [minimumAmount],
-      tickerRules: [nonEmptyTicker],
+      amountRules: [this.methods.minimumAmount],
+      tickerRules: [this.methods.nonEmptyTicker],
       tickers
     }
 
@@ -77,6 +77,15 @@ export default {
     return data
   },
   methods: {
+    minimumAmount (amount) {
+      return amount >= constants.MINIMUM_BET ||
+             `Required minimum amount of: ${constants.MINIMUM_BET}`
+    },
+
+    nonEmptyTicker (ticker) {
+      return ticker ? true : 'Required'
+    },
+
     formatTicker (ticker) {
       return `${ticker.name} - ${ticker.symbol}`
     },
@@ -100,15 +109,6 @@ export default {
       this.confirmSubmission = true
     }
   }
-}
-
-function minimumAmount (amount) {
-  return amount >= constants.MINIMUM_BET ||
-         `Required minimum amount of: ${constants.MINIMUM_BET}`
-}
-
-function nonEmptyTicker (ticker) {
-  return ticker ? true : 'Required'
 }
 
 function resetData (data) {
