@@ -30,6 +30,7 @@
         :rules="amountRules"
         label="Amount"
         type="number"
+        prepend-icon="mdi-currency-usd"
         required
       ></v-text-field>
       <v-autocomplete
