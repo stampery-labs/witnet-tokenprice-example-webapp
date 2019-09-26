@@ -1,17 +1,35 @@
 <template>
-  <h1>70$</h1>
+<div class="grand-price">
+  <p><span class="price-title">Total bet:</span> {{retrieveTotal}}</p>
+</div>
 </template>
 
 <script>
 export default {
-  name: 'grandPrice'
+  name: 'grandPrice',
+  props: {
+    dataset: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    retrieveTotal () {
+      let totalBets = this.dataset.reduce((a, bet) => a + parseInt(bet.amount), 0)
+      return totalBets + '$'
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 
-h1 {
-  background-color: rgba(0, 0, 255, 0.5);
+.grand-price {
+  font-size: 70px;
+  color: #616161;
+  .price-title {
+    font-size: 20px;
+  }
 }
 
 </style>

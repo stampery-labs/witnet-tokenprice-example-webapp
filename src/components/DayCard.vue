@@ -5,19 +5,25 @@
         <ResultList v-if="type ==='finished'"/>
         <div v-else class="not-finished">
           <Countdown type="open" />
-          <GrandPrice/>
+          <div>
+          <GrandPrice :dataset="data" class="price"/>
           <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
+          </div>
         </div>
       </div>
       <div class="column right">
         <div v-if="type ==='open' && hasBets">
           <div v-show="!showForm">
             <MyBets />
-            <button @click="toogleForm">Place a Bet</button>
+            <v-btn color="primary" class="mr-4" @click="toogleForm">
+            Place a Bet
+            </v-btn>
           </div>
           <div v-show="showForm">
             <BetForm />
-            <button @click="toogleForm">Back to my bets</button>
+            <v-btn color="primary" class="mr-4" @click="toogleForm">
+            Back to my bets
+            </v-btn>
           </div>
         </div>
         <MyBets v-else/>
@@ -77,6 +83,9 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .price {
+    text-align: right;
+  }
 }
 .row {
   display: flex;

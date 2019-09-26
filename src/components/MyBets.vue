@@ -1,6 +1,5 @@
 <template>
   <div>
-  <!-- <p class="title">My bets</p> -->
     <v-data-table
       :headers="headers"
       :items="bets"

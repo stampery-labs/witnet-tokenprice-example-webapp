@@ -5,19 +5,55 @@ import { getWeb3, checkMetamaskStatus } from './utils/index'
 Vue.use(Vuex)
 const bets = [{
   address: '0x97BcBE5185A929FfBC493f3d7CF4692797029fF0',
-  amount: '3',
+  amount: '9',
   ticker: 'eth'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
-  amount: '2',
+  amount: '8',
   ticker: 'link'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
-  amount: '1',
+  amount: '7',
   ticker: 'rep'
+},
+{
+  address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '6',
+  ticker: 'btc'
+},
+{
+  address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '5',
+  ticker: 'bch'
+},
+{
+  address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '5',
+  ticker: 'grin'
+},
+{
+  address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '4',
+  ticker: 'ada'
+},
+{
+  address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '3',
+  ticker: 'mkr'
+},
+{
+  address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '2',
+  ticker: 'xmr'
+},
+{
+  address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
+  amount: '1',
+  ticker: 'xlm'
 }
+
 ]
 export default new Vuex.Store({
   state: {
