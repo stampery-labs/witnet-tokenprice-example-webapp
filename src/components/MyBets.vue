@@ -4,7 +4,7 @@
     <v-data-table
       :headers="headers"
       :items="bets"
-      items-per-page="5"
+      :items-per-page="5"
       height="300px"
   ></v-data-table>
   </div>
