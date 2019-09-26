@@ -2,9 +2,9 @@
   <div class="day-card">
     <div class="row">
       <div class="column left">
-        <ResultList v-if="type ==='finished'"/>
+        <TickersRanking v-if="type ==='finish'"/>
         <div v-else class="not-finished">
-          <Countdown type="open" />
+          <Countdown :type="type" />
           <div>
           <GrandPrice :dataset="data" class="price"/>
           <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
@@ -15,15 +15,15 @@
         <div v-if="type ==='open' && hasBets">
           <div v-show="!showForm">
             <MyBets />
-            <v-btn color="primary" class="mr-4" @click="toogleForm">
-            Place a Bet
-            </v-btn>
+            <a class="mr-4" @click="toogleForm">
+              Show form
+            </a>
           </div>
           <div v-show="showForm">
             <BetForm />
-            <v-btn color="primary" class="mr-4" @click="toogleForm">
-            Back to my bets
-            </v-btn>
+            <a @click="toogleForm">
+             Show my predictions
+            </a>
           </div>
         </div>
         <MyBets v-else/>
@@ -38,7 +38,7 @@ import Countdown from '@/components/Countdown.vue'
 import GrandPrice from '@/components/GrandPrice.vue'
 import BetForm from '@/components/BetForm.vue'
 import MyBets from '@/components/MyBets.vue'
-import ResultList from '@/components/ResultList.vue'
+import TickersRanking from '@/components/TickersRanking.vue'
 
 export default {
   name: 'dayCard',
@@ -48,7 +48,7 @@ export default {
     GrandPrice,
     BetForm,
     MyBets,
-    ResultList
+    TickersRanking
   },
   data () {
     return {

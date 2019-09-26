@@ -1,6 +1,6 @@
 <template>
 <div class="grand-price">
-  <p><span class="price-title">Total bet:</span> {{retrieveTotal}}</p>
+  <p><span class="price-title">Total bet:</span> {{retrieveTotal}}<v-icon>mdi-currency-eth</v-icon></p>
 </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   computed: {
     retrieveTotal () {
       let totalBets = this.dataset.reduce((a, bet) => a + parseInt(bet.amount), 0)
-      return totalBets + '$'
+      return totalBets
     }
   }
 }

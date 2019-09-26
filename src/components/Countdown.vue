@@ -29,9 +29,6 @@ export default {
     var tomorrow = new Date()
     tomorrow.setDate(now.getDate() + 1)
     tomorrow.setHours(0)
-    tomorrow.setMinutes(0)
-    tomorrow.setSeconds(0)
-    tomorrow = new Date()
 
     return {
       counting: false,
@@ -60,7 +57,7 @@ export default {
     color: #4caf50;
   }
 
-  &.timelocked {
+  &.timelock {
     color: #bdbdbd;
   }
 
