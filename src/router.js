@@ -5,6 +5,7 @@ import { readAgreeFlag } from '@/utils/index'
 import Home from './views/Home.vue'
 import Disclaimer from './views/Disclaimer'
 import Bet from './views/Bet'
+import Ranking from './views/Ranking'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
       path: '/bet',
       name: 'bet',
       component: Bet
+    },
+    {
+      path: '/ranking',
+      name: 'ranking',
+      component: Ranking
     },
     {
       path: '/disclaimer',
