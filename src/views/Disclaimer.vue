@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import { setSeenCookie } from '@/utils/index'
+import { setAgreeFlag } from '@/utils/index'
 
 export default {
   name: 'disclaimer',
   methods: {
     acceptDisclaimer () {
-      setSeenCookie()
+      setAgreeFlag()
       this.$router.push('/')
     }
   }

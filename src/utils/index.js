@@ -1,9 +1,20 @@
 import Web3 from 'web3'
-import cookie from 'js-cookie'
 import { ADDRESS, ABI } from './constants'
 
-export function setSeenCookie () {
-  cookie.set('seen', true)
+export function setAgreeFlag () {
+  localStorage.setItem('agree', true)
+}
+
+export function readAgreeFlag () {
+  return localStorage.getItem('agree')
+}
+
+export function setSeenFlag () {
+  localStorage.setItem('seen', true)
+}
+
+export function readSeenFlag () {
+  return localStorage.getItem('seen')
 }
 
 export async function getWeb3 () {

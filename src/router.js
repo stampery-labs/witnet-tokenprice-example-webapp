@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import cookie from 'js-cookie'
 
+import { readAgreeFlag } from '@/utils/index'
 import Home from './views/Home.vue'
 import Disclaimer from './views/Disclaimer'
 import Bet from './views/Bet'
@@ -15,7 +15,7 @@ export default new Router({
       name: 'home',
       component: Home,
       beforeEnter: (to, from, next) => {
-        if (cookie.get('seen')) {
+        if (readAgreeFlag()) {
           next()
         } else {
           next('/disclaimer')
