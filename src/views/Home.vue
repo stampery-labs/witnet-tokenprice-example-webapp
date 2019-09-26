@@ -1,12 +1,6 @@
 <template>
   <div>
-    Home component
-
-    <ul>
-      <li><router-link to="/bet">Bet Form</router-link></li>
-    </ul>
-
-    <Timeline/>
+    <Timeline />
   </div>
 </template>
 

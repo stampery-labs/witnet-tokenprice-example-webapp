@@ -4,7 +4,7 @@
       <div class="column left">
         <ResultList v-if="type ==='finished'"/>
         <div v-else class="not-finished">
-          <Countdown />
+          <Countdown type="open" />
           <GrandPrice/>
           <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
         </div>
@@ -12,15 +12,15 @@
       <div class="column right">
         <div v-if="type ==='open' && hasBets">
           <div v-show="!showForm">
-            <YourBets/>
-            <button @click="toogleForm">Bet</button>
+            <MyBets />
+            <button @click="toogleForm">Place a Bet</button>
           </div>
           <div v-show="showForm">
-            <BetForm/>
-            <button @click="toogleForm">Back to your bets</button>
+            <BetForm />
+            <button @click="toogleForm">Back to my bets</button>
           </div>
         </div>
-        <YourBets v-else/>
+        <MyBets v-else/>
       </div>
     </div>
   </div>
@@ -31,7 +31,7 @@ import Graph from '@/components/Graph.vue'
 import Countdown from '@/components/Countdown.vue'
 import GrandPrice from '@/components/GrandPrice.vue'
 import BetForm from '@/components/BetForm.vue'
-import YourBets from '@/components/YourBets.vue'
+import MyBets from '@/components/MyBets.vue'
 import ResultList from '@/components/ResultList.vue'
 
 export default {
@@ -41,7 +41,7 @@ export default {
     Countdown,
     GrandPrice,
     BetForm,
-    YourBets,
+    MyBets,
     ResultList
   },
   data () {

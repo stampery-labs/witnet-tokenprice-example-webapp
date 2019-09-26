@@ -24,6 +24,7 @@ export default new Vuex.Store({
     web3: null,
     metamaskPolling: true,
     metamaskError: 'unlock',
+    userBets: bets,
     polls: [
       {
         type: 'open',
