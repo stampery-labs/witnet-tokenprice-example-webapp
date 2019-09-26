@@ -63,18 +63,18 @@ import tickers from '../data/tickers'
 import * as constants from '../constants'
 
 export default {
-  data: () => {
-    const data = {
+  data () {
+    return {
       show: false,
       confirmSubmission: false,
-      amountRules: [this.methods.minimumAmount],
-      tickerRules: [this.methods.nonEmptyTicker],
-      tickers
+      amountRules: [this.minimumAmount],
+      tickerRules: [this.nonEmptyTicker],
+      tickers,
+      valid: false,
+      ticker: null,
+      amount: null,
+      submitting: false
     }
-
-    resetData(data)
-
-    return data
   },
   methods: {
     minimumAmount (amount) {
@@ -102,7 +102,14 @@ export default {
       })
 
       this.$refs.form.reset()
-      resetData(this)
+      this.resetData()
+    },
+    resetData () {
+      this.valid = false
+      this.ticker = null
+      this.amount = null
+      this.submitting = false
+      this.confirmSubmission = false
     },
 
     submit (event) {
@@ -111,13 +118,6 @@ export default {
   }
 }
 
-function resetData (data) {
-  data.valid = false
-  data.ticker = null
-  data.amount = null
-  data.submitting = false
-  data.confirmSubmission = false
-}
 </script>
 
 <style lang="scss" scoped>
