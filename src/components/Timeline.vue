@@ -16,6 +16,7 @@
         :right="right"
         :small="small"
       >
+      <p class="headline">{{ poll.date }}</p>
        <v-card>
         <DayCard :type="poll.type" :data="poll.barChartData" :index="index"/>
       </v-card>

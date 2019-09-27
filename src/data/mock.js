@@ -216,18 +216,21 @@ export const polls = [
     type: 'open',
     color: 'green',
     bets: bets1,
-    barChartData: bets[getRandomInt(bets.length)]
+    barChartData: bets[getRandomInt(bets.length)],
+    date: 'Ends on October 5, 2019'
   },
   {
     type: 'timelock',
     color: 'grey',
     bets: bets2,
-    barChartData: bets[getRandomInt(bets.length)]
+    barChartData: bets[getRandomInt(bets.length)],
+    date: 'Resolves on October 4, 2019'
   },
   {
     type: 'finish',
     color: 'grey',
     bets: bets3,
-    barChartData: bets[getRandomInt(bets.length)]
+    barChartData: bets[getRandomInt(bets.length)],
+    date: 'Completed on October 3, 2019'
   }
 ]
