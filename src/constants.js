@@ -1,6 +1,0 @@
-export const MINIMUM_BET = 0.01
-
-export const NUM_PARTICIPANTS = 10
-
-export const MEDIUM_VIEWPORT_BREAKPOINT = 1264
-export const SMALL_VIEWPORT_BREAKPOINT = 960

@@ -38,7 +38,7 @@ import GrandPrice from '@/components/GrandPrice.vue'
 import BetForm from '@/components/BetForm.vue'
 import MyBets from '@/components/MyBets.vue'
 import TickersRanking from '@/components/TickersRanking.vue'
-import { SMALL_VIEWPORT_BREAKPOINT } from '@/constants'
+import { SMALL_VIEWPORT_BREAKPOINT } from '@/utils/constants'
 
 export default {
   name: 'dayCard',

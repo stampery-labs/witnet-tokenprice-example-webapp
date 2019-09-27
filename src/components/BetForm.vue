@@ -59,7 +59,7 @@
 
 <script>
 import tickers from '../data/tickers'
-import * as constants from '../constants'
+import * as constants from '@/utils/constants'
 
 export default {
   data () {

@@ -33,8 +33,8 @@ export default {
   beforeCreate () {
     this.$store.dispatch('getWeb3')
     setInterval(() => {
-      this.$store.dispatch('checkMetamaskStatus')
-    }, 1000)
+      this.$store.dispatch('web3Polling')
+    }, 1500)
   }
 }
 </script>

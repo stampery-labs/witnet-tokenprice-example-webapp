@@ -209,7 +209,7 @@ export const bets4 = [{
   ticker: 'xlm'
 }]
 
-const bets = [bets1, bets2, bets3, bets4, bets4, bets4, bets4]
+export const bets = [bets1, bets2, bets3, bets4, bets4, bets4, bets4]
 
 export const polls = [
   {

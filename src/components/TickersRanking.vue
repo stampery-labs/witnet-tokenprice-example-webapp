@@ -30,7 +30,7 @@
 
 <script>
 import tickers from '@/data/tickers'
-import { NUM_PARTICIPANTS, MEDIUM_VIEWPORT_BREAKPOINT } from '@/constants'
+import { NUM_PARTICIPANTS, MEDIUM_VIEWPORT_BREAKPOINT } from '@/utils/constants'
 import RankingList from './RankingList'
 
 export default {
