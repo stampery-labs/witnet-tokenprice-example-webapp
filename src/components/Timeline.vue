@@ -1,6 +1,6 @@
 <template>
-  <div>
     <v-timeline
+      class="timeline"
       :align-top="alignTop"
       :dense="dense"
     >
@@ -17,13 +17,10 @@
         :small="small"
       >
        <v-card>
-        <v-container>
-          <DayCard :type="poll.type" :data="poll.barChartData" :index="index"/>
-        </v-container>
+        <DayCard :type="poll.type" :data="poll.barChartData" :index="index"/>
       </v-card>
       </v-timeline-item>
     </v-timeline>
-  </div>
 </template>
 
 <script>
@@ -59,5 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .timeline {
+    padding: 16px 16px 16px 0;
+  }
 </style>

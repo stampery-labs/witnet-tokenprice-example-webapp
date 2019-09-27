@@ -24,37 +24,36 @@
       </v-card>
     </v-overlay>
 
-    <div>
-      <v-text-field
-        v-model="amount"
-        :rules="amountRules"
-        label="Amount"
-        type="number"
-        prepend-icon="mdi-currency-eth"
-        required
-      ></v-text-field>
-      <v-autocomplete
-        v-model="ticker"
-        :items="tickers"
-        :rules="tickerRules"
-        item-text="name"
-        item-value="symbol"
-        label="Ticker"
-        return-object
-        required
-      >
-        <template v-slot:selection="data">
-          {{ formatTicker(data.item) }}
-        </template>
-        <template v-slot:item="data">
-          {{ formatTicker(data.item) }}
-        </template>
-      </v-autocomplete>
+    <v-text-field
+      v-model="amount"
+      :rules="amountRules"
+      label="Amount"
+      type="number"
+      prepend-icon="mdi-currency-eth"
+      required
+    ></v-text-field>
 
-      <v-btn :disabled="!valid || submitting" class="mr-4" @click="submit">
-        Bet
-      </v-btn>
-    </div>
+    <v-autocomplete
+      v-model="ticker"
+      :items="tickers"
+      :rules="tickerRules"
+      item-text="name"
+      item-value="symbol"
+      label="Ticker"
+      return-object
+      required
+    >
+      <template v-slot:selection="data">
+        {{ formatTicker(data.item) }}
+      </template>
+      <template v-slot:item="data">
+        {{ formatTicker(data.item) }}
+      </template>
+    </v-autocomplete>
+
+    <v-btn :disabled="!valid || submitting" class="mr-4" @click="submit">
+      Bet
+    </v-btn>
   </v-form>
 </template>
 
@@ -122,8 +121,8 @@ export default {
 
 <style lang="scss" scoped>
 h2 {
-  width: 400px;
-  height: 440px;
+  // width: 400px;
+  // height: 440px;
   background-color: antiquewhite;
 }
 </style>

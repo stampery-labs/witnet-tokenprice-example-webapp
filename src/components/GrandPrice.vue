@@ -1,6 +1,8 @@
 <template>
-<div class="grand-price">
-  <p><span class="price-title">Total bet:</span> {{retrieveTotal}}<v-icon>mdi-currency-eth</v-icon></p>
+<div class="grand-price display-1 mb-4 text-right">
+  <p>
+    <span class="">Total bet:</span> {{retrieveTotal}}<v-icon>mdi-currency-eth</v-icon>
+  </p>
 </div>
 </template>
 
@@ -25,10 +27,9 @@ export default {
 <style lang="scss" scoped>
 
 .grand-price {
-  font-size: 70px;
   color: #616161;
+
   .price-title {
-    font-size: 20px;
   }
 }
 

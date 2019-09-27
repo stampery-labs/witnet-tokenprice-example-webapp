@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="my-bets">
+    <v-card-title>
+      My predictions
+    </v-card-title>
     <v-data-table
       :headers="headers"
       :items="bets"
@@ -88,5 +91,10 @@ h2 {
   width: 400px;
   height: 440px;
   background-color:azure;
+}
+
+.my-bets {
+  min-width: 400px;
+
 }
 </style>

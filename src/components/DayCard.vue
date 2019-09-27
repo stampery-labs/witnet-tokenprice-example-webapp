@@ -1,34 +1,33 @@
 <template>
-  <div class="day-card">
-    <div class="row">
-      <div class="column left">
-        <TickersRanking v-if="type ==='finish'"/>
-        <div v-else class="not-finished">
-          <Countdown :type="type" />
-          <div>
-          <GrandPrice :dataset="data" class="price"/>
+  <div  v-resize="onResize" class="d-md-flex">
+      <TickersRanking v-if="type ==='finish'"/>
+      <v-col cols="" v-else class="">
+        <Countdown :type="type" />
+        <div>
+          <GrandPrice class="" :dataset="data" />
           <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
-          </div>
         </div>
-      </div>
-      <div class="column right">
-        <div v-if="type ==='open' && hasBets">
-          <div v-show="!showForm">
-            <MyBets />
-            <a class="mr-4" @click="toogleForm">
-              Show form
-            </a>
-          </div>
-          <div v-show="showForm">
-            <BetForm />
-            <a @click="toogleForm">
-             Show my predictions
-            </a>
-          </div>
+      </v-col>
+
+      <v-col cols="" v-if="type ==='open' && hasBets" class="">
+        <div v-if="!showForm || isMediumViewport">
+          <a v-if="!isMediumViewport" class="" @click="toogleForm">
+            Add a prediction
+          </a>
+          <MyBets />
         </div>
-        <MyBets v-else/>
-      </div>
-    </div>
+        <div v-if="showForm || isMediumViewport">
+          <a v-if="!isMediumViewport" @click="toogleForm">
+            Show my predictions
+          </a>
+          <BetForm />
+        </div>
+      </v-col>
+      <v-col cols="" v-else  class="">
+        <div>
+          <MyBets />
+        </div>
+      </v-col>
   </div>
 </template>
 
@@ -39,6 +38,7 @@ import GrandPrice from '@/components/GrandPrice.vue'
 import BetForm from '@/components/BetForm.vue'
 import MyBets from '@/components/MyBets.vue'
 import TickersRanking from '@/components/TickersRanking.vue'
+import { SMALL_VIEWPORT_BREAKPOINT } from '@/constants'
 
 export default {
   name: 'dayCard',
@@ -53,7 +53,8 @@ export default {
   data () {
     return {
       hasBets: true,
-      showForm: false
+      showForm: true,
+      isMediumViewport: window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     }
   },
   props: {
@@ -71,6 +72,9 @@ export default {
     }
   },
   methods: {
+    onResize () {
+      this.isLargeViewport = window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
+    },
     toogleForm () {
       this.showForm = !this.showForm
     }
@@ -79,31 +83,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.day-card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .price {
-    text-align: right;
-  }
-}
-.row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.column {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  & .right {
-  flex-basis: 100%;
-  }
-  & .left {
-  flex-basis: 70%;
-  }
-}
 
 </style>
