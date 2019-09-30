@@ -7,11 +7,11 @@
           <p class="text overline">Hours</p>
         </div>
         <div class="chunk d-flex-column mr-4">
-          <p class="number headline text-center">{{ props.minutes}}</p>
+          <p class="number headline text-center">{{ (props.minutes < 10) ? ("0" + props.minutes) : props.minutes }}</p>
           <p class="text overline">Minutes</p>
         </div>
         <div class="chunk d-flex-column">
-          <p class="number headline text-center">{{ props.seconds}}</p>
+          <p class="number headline text-center">{{ (props.seconds < 10) ? ("0" + props.seconds) : props.seconds}}</p>
           <p class="text overline">Seconds</p>
         </div>
       </div>
