@@ -23,7 +23,7 @@ export default {
 
     setTimeout(() => {
       this.wait = false
-    }, 1000)
+    }, 5000)
   },
   computed: {
     ...mapState({
@@ -32,6 +32,7 @@ export default {
   },
   beforeCreate () {
     this.$store.dispatch('getWeb3')
+
     setInterval(() => {
       this.$store.dispatch('web3Polling')
     }, 1500)

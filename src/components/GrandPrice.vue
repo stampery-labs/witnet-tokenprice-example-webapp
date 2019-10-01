@@ -1,7 +1,7 @@
 <template>
 <div class="grand-price display-1 mb-4 text-right">
   <p>
-    <span class="">Total bet:</span> {{retrieveTotal}}<v-icon>mdi-currency-eth</v-icon>
+    <span class="">Total bet:</span> {{ prize }}<v-icon>mdi-currency-eth</v-icon>
   </p>
 </div>
 </template>
@@ -10,16 +10,13 @@
 export default {
   name: 'grandPrice',
   props: {
-    dataset: {
-      type: Array,
+    prize: {
+      default: 0,
+      type: Number,
       required: true
     }
   },
   computed: {
-    retrieveTotal () {
-      let totalBets = this.dataset.reduce((a, bet) => a + parseInt(bet.amount), 0)
-      return totalBets
-    }
   }
 }
 </script>

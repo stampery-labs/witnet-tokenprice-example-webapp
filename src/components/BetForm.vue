@@ -1,29 +1,12 @@
 <template>
   <v-form ref="form" v-model="valid">
-    <v-overlay :value="confirmSubmission">
-      <v-card
-        light
-        max-width="400"
-        class="mx-auto"
-      >
-        <v-card-text>
-          <p class="title" v-if="ticker">
-            Confirm bet of {{ amount }} to {{ ticker.name }}?
-          </p>
-        </v-card-text>
-
-        <v-card-actions class="justify-center">
-          <v-btn color="primary" class="mr-4" @click="confirmSubmit">
-            Place bet
-          </v-btn>
-
-          <v-btn class="mr-4" @click="cancelSubmit">
-            Cancel
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-overlay>
-
+    <BetConfirmation
+      :show="confirmSubmission"
+      :amount="amount"
+      :ticker="ticker.name"
+      v-on:cancel-submit="cancelSubmit"
+      v-on:confirm-submit="confirmSubmit"
+    />
     <v-text-field
       v-model="amount"
       :rules="amountRules"
@@ -60,8 +43,12 @@
 <script>
 import tickers from '../data/tickers'
 import * as constants from '@/utils/constants'
+import BetConfirmation from '@/components/BetConfirmation'
 
 export default {
+  component: {
+    BetConfirmation
+  },
   data () {
     return {
       show: false,

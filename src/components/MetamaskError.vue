@@ -20,6 +20,14 @@
       </v-col>
     </v-row>
 
+    <v-row v-if="type === ERRORS.CONTRACT_NOT_AVAILABLE" align="center">
+      <v-col class="grow">
+        <span>
+          Error getting the contract
+        </span>
+      </v-col>
+    </v-row>
+
     <v-row v-if="type === ERRORS.METAMASK_LOCKED" align="center">
       <v-col class="grow">
         <span>Metamask locked: Please unlock a metamask account.</span>

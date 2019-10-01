@@ -1,5 +1,5 @@
 import Web3 from 'web3'
-import { ADDRESS, ABI, ETHEREUM_NETWORK_ID, ERRORS } from '@/utils/constants'
+import { ADDRESS, ABI, ETHEREUM_NETWORK_ID, ERRORS, TOKENS } from '@/utils/constants'
 
 export function setAgreeFlag () {
   localStorage.setItem('agree', true)
@@ -57,6 +57,8 @@ export async function checkMetamaskStatus (web3) {
 export async function checkEthereumNetwork (web3) {
   if (web3) {
     const network = await web3.eth.net.getId()
+    console.log('network', network)
+    console.log('NET', ETHEREUM_NETWORK_ID)
     if (network !== ETHEREUM_NETWORK_ID) {
       throw Error(ERRORS.WRONG_NETWORK)
     }
@@ -67,5 +69,28 @@ export async function checkEthereumNetwork (web3) {
 }
 
 export async function getContract (web3Provider) {
-  return new web3Provider.eth.Contract(ABI, ADDRESS)
+  try {
+    const contract = await new web3Provider.eth.Contract(ABI, ADDRESS)
+    if (!contract) {
+      throw Error(ERRORS.CONTRACT_NOT_AVAILABLE)
+    }
+    return contract
+  } catch (error) {
+    throw Error(ERRORS.CONTRACT_NOT_AVAILABLE)
+  }
+}
+
+export async function getTotalTokensAmountByDay (contractInstance, day) {
+  const tokens = { }
+
+  for (let token of TOKENS) {
+    let amount = await contractInstance.methods.getTotalAmountTokenDay(day, parseInt(token.position)).call()
+    tokens[token.ticker] = {
+      name: token.name,
+      ticker: token.ticker,
+      amount
+    }
+  }
+
+  return tokens
 }

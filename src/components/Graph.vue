@@ -66,7 +66,7 @@ export default {
         .data(this.dataset)
         .enter()
         .append('text')
-        .text((d) => d[this.yKey] + '%')
+        .text((d) => d[this.yKey] + ' \u039E')
         .attr('x', d => {
           return this.xScale(d[this.xKey]) + this.svgWidth / 20
         })
@@ -80,7 +80,7 @@ export default {
     },
     addAxes () {
       let x = d3.scaleBand()
-        .domain(['eth', 'link', 'rep', 'btc', 'bch', 'grin', 'ada', 'mkr', 'xmr', 'xlm'])
+        .domain(['ATOM', 'BTC', 'ETC', 'ETH', 'GNT', 'LINK', 'MKR', 'REP', 'XTZ', 'ZEC'])
         .range([0, this.svgWidth])
 
       // Draw the axis

@@ -1,5 +1,5 @@
 <template>
-  <countdown :time="time" :interval="100" tag="p" class="time" :class="[type]">
+  <countdown :time="time" :interval="100" tag="p" class="time" :class="[status]">
     <template slot-scope="props" class="">
       <div class="time d-flex justify-center">
         <div class="chunk d-flex-column mr-4">
@@ -22,23 +22,27 @@
 <script>
 export default {
   data: function () {
-    var now = new Date()
-    var tomorrow = new Date()
-    tomorrow.setDate(now.getDate() + 1)
-    tomorrow.setHours(0)
-
     return {
-      counting: false,
-      time: tomorrow - now
+      counting: false
+    }
+  },
+  computed: {
+    time () {
+      console.log('end', this.endDate)
+      console.log('start', this.startDate)
+      return this.endDate - this.startDate
     }
   },
   props: {
-    type: {
+    startDate: {
+      required: true
+    },
+    endDate: {
+      required: true
+    },
+    status: {
       required: true,
-      type: String,
-      validator: function (val) {
-        return ['open', 'timelock'].indexOf(val) !== -1
-      }
+      type: String
     }
   },
   methods: {

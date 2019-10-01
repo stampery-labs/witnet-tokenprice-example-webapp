@@ -15,6 +15,13 @@
 <script>
 export default {
   name: 'youtBets',
+  props: {
+    bets: {
+      required: true,
+      default: () => [],
+      type: Array
+    }
+  },
   data () {
     return {
       headers: [
@@ -29,56 +36,6 @@ export default {
           align: 'left',
           sortable: true,
           value: 'amount'
-        }
-      ],
-      bets: [
-        {
-          ticker: 'ETH',
-          amount: 1
-        },
-        {
-          ticker: 'REP',
-          amount: 2
-        },
-        {
-          ticker: 'LINK',
-          amount: 1
-        },
-        {
-          ticker: 'BTC',
-          amount: 3
-        },
-        {
-          ticker: 'ETH',
-          amount: 1
-        },
-        {
-          ticker: 'REP',
-          amount: 2
-        },
-        {
-          ticker: 'LINK',
-          amount: 1
-        },
-        {
-          ticker: 'BTC',
-          amount: 3
-        },
-        {
-          ticker: 'ETH',
-          amount: 1
-        },
-        {
-          ticker: 'REP',
-          amount: 2
-        },
-        {
-          ticker: 'LINK',
-          amount: 1
-        },
-        {
-          ticker: 'BTC',
-          amount: 3
         }
       ]
     }
