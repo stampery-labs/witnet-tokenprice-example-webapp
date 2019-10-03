@@ -27,9 +27,9 @@
 <script>
 export default {
   props: {
-    amount: Number,
+    amount: String,
     ticker: String,
-    open: Boolean
+    show: Boolean
   },
   methods: {
     confirmSubmit () {

@@ -15,7 +15,15 @@
         :small="true"
       >
       <p class="headline">{{ poll.endDate }}</p>
-      <DayCard :date="poll.date" :type="poll.type" :data="poll.barChartData" :index="index"/>
+      <DayCard
+        :startDate="poll.startDate"
+        :endDate="poll.endDate"
+        :bets="poll.bets"
+        :status="poll.status"
+        :data="poll.barChartData"
+        :index="index"
+        :myBets="poll.myBets"
+      />
       </v-timeline-item>
     </v-timeline>
 </template>

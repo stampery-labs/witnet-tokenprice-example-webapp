@@ -3,7 +3,7 @@
     <BetConfirmation
       :show="confirmSubmission"
       :amount="amount"
-      :ticker="ticker.name"
+      :ticker="tickerName"
       v-on:cancel-submit="cancelSubmit"
       v-on:confirm-submit="confirmSubmit"
     />
@@ -46,7 +46,7 @@ import * as constants from '@/utils/constants'
 import BetConfirmation from '@/components/BetConfirmation'
 
 export default {
-  component: {
+  components: {
     BetConfirmation
   },
   data () {
@@ -58,8 +58,13 @@ export default {
       tickers,
       valid: false,
       ticker: null,
-      amount: null,
+      amount: '0.1',
       submitting: false
+    }
+  },
+  computed: {
+    tickerName () {
+      return this.ticker ? this.ticker.name : ''
     }
   },
   methods: {

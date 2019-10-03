@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { STATES } from '@/utils/constants'
 export default {
   data: function () {
     return {
@@ -31,7 +32,7 @@ export default {
       required: true,
       type: String,
       validator: function (val) {
-        return ['bet', 'wait'].indexOf(val) !== -1
+        return Object.values(STATES).indexOf(val) !== -1
       }
     }
   },

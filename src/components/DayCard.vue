@@ -4,9 +4,9 @@
       <div class="row field">
         <header>
           <h1 class="day">{{ dayName }}</h1>
-          <h3 v-if="index <= 2" class="date">({{ date }})</h3>
+          <h3 v-if="index <= 2" class="date">({{ endDate }})</h3>
         </header>
-        <main class="status" :class="[type]">{{ statusText }}</main>
+        <main class="status" :class="[status]">{{ statusText }}</main>
       </div>
       <div class="row field" v-if="countdownHeader">
         <header>
@@ -18,10 +18,10 @@
         <header>
           <h1>{{ prizeHeader }}</h1>
         </header>
-        <GrandPrice :dataset="data" />
+        <GrandPrice :prize="totalPrize" />
       </div>
     </div>
-    <div class="column" v-if="type ==='final'">
+    <div class="column" v-if="status ==='PAYOUT'">
       <TickersRanking/>
     </div>
     <div class="column graph" v-else>
@@ -29,11 +29,11 @@
         <header>
           <h1>{{ volumesHeader }}</h1>
         </header>
-        <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
+        <Graph xKey="ticker" yKey="amount" :dataset="Object.values(bets)" :index="index"/>
       </div>
     </div>
 
-    <div class="column myBets" v-if="type ==='bet' && hasBets">
+    <div class="column myBets" v-if="status ==='BET' && hasBets">
       <div v-if="!showForm || isMediumViewport">
         <a v-if="!isMediumViewport" class="" @click="toggleForm">
           Add a prediction
