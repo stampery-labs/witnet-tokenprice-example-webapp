@@ -1,6 +1,6 @@
 <template>
   <div ref="container" id="container" class="svg-container">
-    <svg :class="'poll' + index" v-if="redrawToggle === true" :width="svgWidth" :height="svgHeight + 50">
+    <svg :class="'poll' + index" v-if="redrawToggle === true" :width="svgWidth" :height="svgHeight + 20">
         <g>
           <rect
             v-for="item in dataset"
@@ -163,12 +163,11 @@ export default {
 }
 
 .svg-container {
-  display: inline-block;
+  display: block;
   position: relative;
   width: 100%;
-  padding-bottom: 1%;
-  vertical-align: top;
 }
+
 svg text {
   font-size: 12px;
   font-weight: 700;

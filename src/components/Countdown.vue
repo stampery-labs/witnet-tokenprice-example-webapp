@@ -1,20 +1,9 @@
 <template>
   <countdown :time="time" :interval="100" tag="p" class="time" :class="[status]">
     <template slot-scope="props" class="">
-      <div class="time d-flex justify-center">
-        <div class="chunk d-flex-column mr-4">
-          <p class="number headline text-center">{{ props.hours }}</p>
-          <p class="text overline">Hours</p>
-        </div>
-        <div class="chunk d-flex-column mr-4">
-          <p class="number headline text-center">{{ props.minutes}}</p>
-          <p class="text overline">Minutes</p>
-        </div>
-        <div class="chunk d-flex-column">
-          <p class="number headline text-center">{{ props.seconds}}</p>
-          <p class="text overline">Seconds</p>
-        </div>
-      </div>
+      <span class="number">{{ pad(props.hours) }}h </span>
+      <span class="number">{{ pad(props.minutes) }}m </span>
+      <span class="number">{{ pad(props.seconds) }}s</span>
     </template>
   </countdown>
 </template>
@@ -28,8 +17,6 @@ export default {
   },
   computed: {
     time () {
-      console.log('end', this.endDate)
-      console.log('start', this.startDate)
       return this.endDate - this.startDate
     }
   },
@@ -42,23 +29,22 @@ export default {
     },
     status: {
       required: true,
-      type: String
+      type: String,
+      validator: function (val) {
+        return ['bet', 'wait'].indexOf(val) !== -1
+      }
     }
   },
   methods: {
+    pad (input) {
+      return input < 10 ? '0' + input : input
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .time {
-
-  &.open {
-    color: #4caf50;
-  }
-
-  &.timelock {
-    color: #bdbdbd;
-  }
+  margin: 0;
 }
 </style>

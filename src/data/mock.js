@@ -213,24 +213,24 @@ export const bets = [bets1, bets2, bets3, bets4, bets4, bets4, bets4]
 
 export const polls = [
   {
-    type: 'open',
+    type: 'bet',
     color: 'green',
     bets: bets1,
     barChartData: bets[getRandomInt(bets.length)],
-    date: 'Ends on October 5, 2019'
+    date: '10/05/2019'
   },
   {
-    type: 'timelock',
+    type: 'wait',
     color: 'grey',
     bets: bets2,
     barChartData: bets[getRandomInt(bets.length)],
-    date: 'Resolves on October 4, 2019'
+    date: '10/04/2019'
   },
   {
-    type: 'finish',
+    type: 'final',
     color: 'grey',
     bets: bets3,
     barChartData: bets[getRandomInt(bets.length)],
-    date: 'Completed on October 3, 2019'
+    date: '10/03/2019'
   }
 ]

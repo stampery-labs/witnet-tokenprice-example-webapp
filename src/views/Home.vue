@@ -1,17 +1,20 @@
 <template>
-  <div>
+  <main class="home">
+    <Header v-if="" />
     <Instructions v-if="showInstructions" v-on:close="onCloseInstructions" />
     <Timeline />
-  </div>
+  </main>
 </template>
 
 <script>
+import Header from '@/components/Header'
 import Timeline from '@/components/Timeline.vue'
 import Instructions from '@/components/Instructions.vue'
 import { setSeenFlag, readSeenFlag } from '@/utils/index'
 
 export default {
   components: {
+    Header,
     Timeline,
     Instructions
   },
@@ -33,3 +36,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

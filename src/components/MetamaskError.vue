@@ -2,12 +2,12 @@
   <v-alert
     prominent
     :type="typeSync"
+    class="metamask-alert"
   >
     <v-row v-if="type === ERRORS.METAMASK_NOTFOUND" align="center">
       <v-col class="grow">
         <span>
-          Metamask not found: Please install the Metamask browser extension through this
-          <a class="black--text" href="https://metamask.io/">link</a>
+          Web3 Provider not found: Please install the <a href="https://metamask.io/">Metamask browser add-on</a> or use a Web3-enabled browser like <a href="https://www.opera.com">Opera</a> or <a href="https://play.google.com/store/apps/details?id=io.metamask">Metamask for Android</a>.
         </span>
       </v-col>
     </v-row>
@@ -15,7 +15,7 @@
     <v-row v-if="type === ERRORS.WRONG_NETWORK" align="center">
       <v-col class="grow">
         <span>
-          You are connected to a not supported network. Please change to: {{ ETHEREUM_NETWORK }}
+          Your Web3 provider is configured to use an unsupported network. Please change to: {{ ETHEREUM_NETWORK }}
         </span>
       </v-col>
     </v-row>
@@ -30,7 +30,7 @@
 
     <v-row v-if="type === ERRORS.METAMASK_LOCKED" align="center">
       <v-col class="grow">
-        <span>Metamask locked: Please unlock a metamask account.</span>
+        <span>Metamask / Web3 provider is locked: please unlock one of your Web 3 accounts.</span>
       </v-col>
       <v-col class="shrink">
         <v-btn @click="unlock">Unlock!</v-btn>
@@ -70,5 +70,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  a {
+    color: #333;
+  }
+  .metamask-alert {
+    border-radius: 0;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, .1);
+  }
 </style>

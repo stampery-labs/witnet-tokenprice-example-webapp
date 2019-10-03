@@ -39,3 +39,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap');
+
+  html * {
+    font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+  }
+</style>

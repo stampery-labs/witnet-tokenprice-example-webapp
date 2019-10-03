@@ -1,8 +1,8 @@
 <template>
-  <div class="my-bets">
-    <v-card-title>
-      My predictions
-    </v-card-title>
+  <div class="my-bets field">
+    <header>
+      <h1>My predictions</h1>
+    </header>
     <v-data-table
       :headers="headers"
       :items="bets"

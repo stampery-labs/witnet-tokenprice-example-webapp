@@ -1,34 +1,57 @@
 <template>
-  <div  v-resize="onResize" class="d-md-flex">
-    ---..{{ status }}
-    <TickersRanking v-if="status === STATES.PAYOUT"/>
-    <v-col cols="" v-else class="">
-      <Countdown :startDate="startDate" :endDate="endDate" :status="status" />
-      <div>
-        <GrandPrice class="" :prize="totalPrize" />
-        <Graph xKey="ticker" yKey="amount" :dataset="Object.values(bets)" :index="index"/>
+  <div v-resize="onResize" class="dayCard">
+    <div class="column dayState">
+      <div class="row field">
+        <header>
+          <h1 class="day">{{ dayName }}</h1>
+          <h3 v-if="index <= 2" class="date">({{ date }})</h3>
+        </header>
+        <main class="status" :class="[type]">{{ statusText }}</main>
       </div>
-    </v-col>
+      <div class="row field" v-if="countdownHeader">
+        <header>
+          <h1>{{ countdownHeader }}</h1>
+        </header>
+        <Countdown :startDate="startDate" :endDate="endDate" :status="status" class="countdown" />
+      </div>
+      <div class="row field">
+        <header>
+          <h1>{{ prizeHeader }}</h1>
+        </header>
+        <GrandPrice :dataset="data" />
+      </div>
+    </div>
+    <div class="column" v-if="type ==='final'">
+      <TickersRanking/>
+    </div>
+    <div class="column graph" v-else>
+      <div class="row field">
+        <header>
+          <h1>{{ volumesHeader }}</h1>
+        </header>
+        <Graph xKey="ticker" yKey="amount" :dataset="data" :index="index"/>
+      </div>
+    </div>
 
-    <v-col cols="" v-if="status === STATES.BET && hasBets" class="">
+    <div class="column myBets" v-if="type ==='bet' && hasBets">
       <div v-if="!showForm || isMediumViewport">
-        <a v-if="!isMediumViewport" class="" @click="toogleForm">
+        <a v-if="!isMediumViewport" class="" @click="toggleForm">
           Add a prediction
         </a>
-        <MyBets :bets="myBets" />
+        <MyBets />
       </div>
       <div v-if="showForm || isMediumViewport">
-        <a v-if="!isMediumViewport" @click="toogleForm">
+        <a v-if="!isMediumViewport" @click="toggleForm">
           Show my predictions
         </a>
         <BetForm />
       </div>
-    </v-col>
-    <v-col cols="" v-else  class="">
+    </div>
+    <div class="column myBets" v-else>
       <div>
         <MyBets :bets="myBets" />
       </div>
-    </v-col>
+    </div>
   </div>
 </template>
 
@@ -68,6 +91,28 @@ export default {
       return Object.values(this.bets).reduce((acc, asset) => {
         acc += parseInt(asset.amount)
       }, 0)
+    },
+    dayName () {
+      return this.index > 2 ? this.date : ['tomorrow', 'today', 'yesterday'][this.index]
+    },
+    statusText () {
+      return {
+        [STATES.BET]: 'Predictions are open',
+        [STATES.WAIT]: 'Predictions closed: waiting for end of the day',
+        [STATES.PAYOUT]: 'Finalized'
+      }[this.status] || 'Unknown status'
+    },
+    countdownHeader () {
+      return {
+        [STATES.BET]: 'Closing in',
+        [STATES.WAIT]: 'Waiting for'
+      }[this.status]
+    },
+    prizeHeader () {
+      return this.status === STATES.BET ? 'Current grand prize' : 'Final grand prize'
+    },
+    volumesHeader () {
+      return this.status === STATES.BET ? 'Current prediction volumes' : 'Final prediction volumes'
     }
   },
   props: {
@@ -98,13 +143,117 @@ export default {
     onResize () {
       this.isLargeViewport = window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     },
-    toogleForm () {
+    toggleForm () {
       this.showForm = !this.showForm
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.dayCard {
+  background-color: white;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  padding-left: 0px;
+  &:before {
+    border-top: 1px solid #CCC;
+    content: "";
+    display: block;
+    width: 50px;
+    position: absolute;
+    left: -50px;
+    top: 12px;
+  }
+  .dayState {
+    width: 350px;
+    padding-bottom: 20px;
+  }
+  .column {
+    padding: 35px;
+    &:first-child {
+      padding-left: 45px;
+    }
+    .row {
+      margin-bottom: 20px;
+    }
+  }
+  .column:not(:last-child) {
+    border-right: 1px solid #DDD;
+  }
+  .countdown {
+    font-size: 1.8rem;
+  }
+  .graph {
+    align-items: space-between;
+    display: flex;
+    header {
+      margin-bottom: 20px;
+    }
+  }
+  .field {
+    header {
+      color: #666;
+      display: block;
+      font-weight: bold;
+      text-transform: uppercase;
+      width: 100%;
+      h1 {
+        color: #B3B3B3;
+        display: inline;
+        font-size: 1.1rem;
+        &.day {
+          color: #666;
+        }
+      }
+      .date {
+        color: #AAA;
+        display: inline;
+        font-size: .9rem;
+        margin-left: 10px;
+      }
+    }
+    .status {
+      font-size: 1.8rem;
+      line-height: 1.2em;
+      margin-top: .2em;
+      &.bet {
+        color: #37C837;
+      }
+      &.wait {
+        color: #FF6600;
+      }
+    }
+  }
+}
 
+@media screen and (max-width: 959px) {
+  .dayCard {
+    grid-template-columns: auto;
+    .dayState {
+      justify-self: center;
+    }
+    .column:not(:last-child) {
+      border-right: 0;
+      border-top: 1px solid #DDD;
+    }
+  }
+}
+
+@media screen and (min-width: 960px) and (max-width: 1400px) {
+  .dayCard {
+    grid-template-columns: min-content 1fr;
+    .column:not(:last-child) {
+      border-right: 0;
+      border-top: 1px solid #DDD;
+    }
+    .myBets {
+      border-top: 1px solid #DDD;
+      grid-column-start: span 2;
+    }
+  }
+}
 </style>

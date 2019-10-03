@@ -34,8 +34,8 @@
       </template>
     </v-autocomplete>
 
-    <v-btn :disabled="!valid || submitting" class="mr-4" @click="submit">
-      Bet
+    <v-btn :disabled="!valid || submitting" color="success" class="send" @click="submit">
+      Send prediction
     </v-btn>
   </v-form>
 </template>
@@ -111,5 +111,10 @@ h2 {
   // width: 400px;
   // height: 440px;
   background-color: antiquewhite;
+}
+.send {
+  padding: 30px !important;
+  width: 100%;
+  //background-color: #37c837 !important;
 }
 </style>

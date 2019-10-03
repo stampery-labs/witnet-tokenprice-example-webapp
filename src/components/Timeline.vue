@@ -15,16 +15,7 @@
         :small="true"
       >
       <p class="headline">{{ poll.endDate }}</p>
-       <v-card>
-        <DayCard
-          :status="poll.status"
-          :bets="poll.bets"
-          :index="index"
-          :startDate="poll.startDate"
-          :endDate="poll.endDate"
-          :myBets="poll.myBets"
-        />
-      </v-card>
+      <DayCard :date="poll.date" :type="poll.type" :data="poll.barChartData" :index="index"/>
       </v-timeline-item>
     </v-timeline>
 </template>
@@ -32,6 +23,7 @@
 <script>
 import { mapState } from 'vuex'
 import DayCard from '@/components/DayCard.vue'
+import { STATES } from '@/utils/constants'
 
 export default {
   name: 'Timeline',
@@ -43,42 +35,23 @@ export default {
   computed: {
     ...mapState({
       polls: state => {
-        console.log('----', state)
-        return state.polls
-        // return []
-      },
-
-      polls1: state => {
-        console.log('----', state)
         return state.polls
       }
     })
   },
   beforeCreate () {
-    // setInterval(() => {
-    //   console.log('inside')
     this.$store.dispatch('fetchPolls')
-    // }, 1500)
   },
   methods: {
     getStatusColor (status) {
-      if (status === 'BET') {
-        return '#4CAF50'
-      } else if (status === 'WAIT') {
-        return '#9E9E9E'
-      } else if (status === 'RESOLVE') {
-        // orange
-        return '#FF9800'
-      } else if (status === 'PAYOUT') {
-        // orange
-        return '#FF9800'
-      } else if (status === 'FINAL') {
-        // blue
-        return '#2196F3'
-      } else if (status === 'INVALID') {
-        // red
-        return '#F44336'
-      }
+      return {
+        [STATES.BET]: '#4CAF50',
+        [STATES.WAIT]: '#9E9E9E',
+        [STATES.RESOLVE]: '#FF9800',
+        [STATES.PAYOUT]: '#FF9800',
+        [STATES.FINAL]: '#2196F3',
+        [STATES.INVALID]: '#F44336'
+      }[status]
     }
   }
 }
