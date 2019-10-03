@@ -8,13 +8,13 @@
       :items="bets"
       :items-per-page="5"
       height="300px"
-  ></v-data-table>
+    ></v-data-table>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'youtBets',
+  name: 'yourBets',
   props: {
     bets: {
       required: true,

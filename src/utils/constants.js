@@ -26,8 +26,8 @@ export const ETHEREUM_NETWORKS = {
   }
 }
 
-export const ETHEREUM_NETWORK = ETHEREUM_NETWORKS.GOERLI
-export const ETHEREUM_NETWORK_ID = 1570090384182
+export const ETHEREUM_NETWORK = ETHEREUM_NETWORKS.RINKEBY
+export const ETHEREUM_NETWORK_ID = ETHEREUM_NETWORK.id
 
 export const ERRORS = {
   METAMASK_LOCKED: 'METAMASK_LOCKED',
@@ -36,7 +36,7 @@ export const ERRORS = {
   CONTRACT_NOT_AVAILABLE: 'CONTRACT_NOT_AVAILABLE'
 }
 
-export const ADDRESS = '0x69A711884e97BB42337192a4Af18907F38A7F2aa'
+export const ADDRESS = '0xAfE1C0DaB27D692239981fFb9d5e6E6E53a755Fd'
 export const ABI = TokenPriceContestABI.abi
 
 export const TOKENS = [
@@ -92,9 +92,14 @@ export const TOKENS = [
   }
 ]
 
-export const ITEMS_PER_PAGE = 1
+export const ITEMS_PER_PAGE = 3
 
-// BET, WAIT, RESOLVE, WAIT_RESULT, PAYOUT, INVALID
+// BET -> You can bet with no restriction
+// WAIT -> You have to wait until RESOLVE
+// RESOLVE -> You can click the button to resolve market
+// WAIT_RESULT -> You have to listen the wbi event or read the state of the wbi. If result is true show Button to withdraw. The states changes auto to PAYOUT
+// PAYOUT -> You can withdraw. Show button
+// INVALID -> You are trying to read a future day
 export const STATES = {
   BET: 'BET',
   WAIT: 'WAIT',

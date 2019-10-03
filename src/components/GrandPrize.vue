@@ -1,7 +1,7 @@
 <template>
-  <div class="grand-price">
+  <div class="grand-prize">
     <div class="eth">
-      {{ prize }}<span class="currency">ETH</span>
+      {{ syncedPrize }}<span class="currency">ETH</span>
     </div>
     <ul class="fiat">
       <li>{{ usd }}<span class="currency">USD</span></li>
@@ -13,23 +13,26 @@
 
 <script>
 export default {
-  name: 'grandPrice',
+  name: 'grandPrize',
   props: {
     prize: {
-      default: 0,
-      type: Number,
+      default: '0',
+      type: String,
       required: true
     }
   },
   computed: {
+    syncedPrize () {
+      return parseFloat(this.prize)
+    },
     usd () {
-      return parseInt(this.prize * 175.60)
+      return parseInt(this.syncedPrize * 175.60)
     },
     eur () {
-      return parseInt(this.prize * 160.30)
+      return parseInt(this.syncedPrize * 160.30)
     },
     jpy () {
-      return parseInt(this.prize * 18830.29)
+      return parseInt(this.syncedPrize * 18830.29)
     }
   }
 }
@@ -37,7 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 
-.grand-price {
+.grand-prize {
   color: #333;
   .eth {
     border: 2px solid #FFD42A;
@@ -60,7 +63,7 @@ export default {
 }
 
 @media screen and (min-width: 960px) {
-  .grand-price {
+  .grand-prize {
     text-align: center;
     width: 100%;
   }

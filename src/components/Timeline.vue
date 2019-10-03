@@ -14,9 +14,9 @@
         :right="false"
         :small="true"
       >
-      <p class="headline">{{ poll.endDate }}</p>
       <DayCard
         :startDate="poll.startDate"
+        :grandPrize="poll.grandPrize"
         :endDate="poll.endDate"
         :bets="poll.bets"
         :status="poll.status"
@@ -48,7 +48,7 @@ export default {
     })
   },
   beforeCreate () {
-    this.$store.dispatch('fetchPolls')
+    // this.$store.dispatch('fetchPolls')
   },
   methods: {
     getStatusColor (status) {

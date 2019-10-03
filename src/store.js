@@ -10,7 +10,6 @@ export default new Vuex.Store({
     web3: null,
     metamaskPolling: true,
     metamaskError: null,
-    userBets: [],
     polls: [],
     contractInstance: null,
     contestPeriod: null,
@@ -24,13 +23,15 @@ export default new Vuex.Store({
     },
 
     setPolls (state, { polls }) {
-      const newPolls = state.polls && state.polls.length && polls ? polls.filter(poll => {
-        return poll.dayNumber > state.polls[state.polls.length - 1].dayNumber
-      }) : polls
+      // const newPolls = polls
+      //  state.polls && state.polls.length && polls ? polls.filter(poll => {
+      //   return poll.dayNumber > state.polls[state.polls.length - 1].dayNumber
+      // }) : polls
 
-      newPolls.forEach(newPoll => {
-        state.polls.push(newPoll)
-      })
+      // newPolls.forEach(newPoll => {
+      //   state.polls.push(newPoll)
+      // })
+      state.polls = polls
     },
 
     setDappConstants (state, { firstDayTimestamp, contestPeriod }) {
@@ -53,6 +54,12 @@ export default new Vuex.Store({
 
   },
   actions: {
+    async resolve (context, { day }) {
+      console.log('calling resolve!')
+    },
+    async payout (context) {
+      console.log('calling payout!')
+    },
     async web3Polling (context) {
       checkMetamaskStatus(context.state.web3)
         .then(() => checkEthereumNetwork(context.state.web3))
@@ -79,7 +86,6 @@ export default new Vuex.Store({
         context.commit('setWeb3', { web3Instance: web3 })
         const contract = await getContract(context.state.web3)
         context.commit('setContract', { contract })
-        console.log('before get dapp constants----')
         context.dispatch('getDappConstants')
       } catch (error) {
         context.commit('setMetamaskError', { error: error })
@@ -89,7 +95,8 @@ export default new Vuex.Store({
     async getDappConstants (context) {
       const firstDayTimestamp = await context.state.contractInstance.methods.firstDay().call()
       const contestPeriod = await context.state.contractInstance.methods.contestPeriod().call()
-      this.commit('setDappConstants', { firstDayTimestamp, contestPeriod })
+      context.commit('setDappConstants', { firstDayTimestamp, contestPeriod })
+      context.dispatch('fetchPolls')
     },
 
     async getContract (context) {
@@ -97,32 +104,43 @@ export default new Vuex.Store({
       this.commit('setContract', { contract })
     },
 
-    async fetchPolls (context) {
-      if (context.state.contractInstance) {
-        const lastDay = await context.state.contractInstance.methods.getCurrentDay().call()
+    async fetchPolls ({ state, commit, dispatch }) {
+      // debugger
+      const contract = state.contractInstance
+      const fromWei = state.web3.utils.fromWei
+      if (state.contractInstance) {
+        const lastDay = await state.contractInstance.methods.getCurrentDay().call()
         const days = []
-        for (let i = lastDay; i >= 0 && i >= lastDay - ITEMS_PER_PAGE; i--) {
-          let dayInformation = await context.state.contractInstance.methods.getDayInfo(i).call()
-          let bets = await getTotalTokensAmountByDay(context.state.contractInstance, i)
-          let myBets = (await context.state.contractInstance.methods.getMyBetsDay(i).call()).map((amount, index) => {
-            return { amount, ...TOKENS[index] }
+        for (let i = lastDay; i >= 0 && i > lastDay - ITEMS_PER_PAGE; i--) {
+          let dayInformation = await contract.methods.getDayInfo(i).call()
+          console.log('-----', dayInformation)
+          let grandPrize = fromWei(dayInformation.grandPrize)
+          let bets = await getTotalTokensAmountByDay(contract, i, fromWei)
+          let myBets = (await state.contractInstance.methods.getMyBetsDay(i).call()).map((amount, index) => {
+            return { amount: fromWei(amount), ...TOKENS[index] }
           })
 
-          const status = pollStatesMap[await context.state.contractInstance.methods.getDayState(i).call()]
-          const startDate = new Date(parseInt(context.state.firstDayTimestamp) * 1000 + parseInt(context.state.contestPeriod) * i)
-          const endDate = new Date(parseInt(context.state.firstDayTimestamp) * 1000 + parseInt(context.state.contestPeriod) * (i + 1))
-          days.push({ bets, dayInformation, dayNumber: i, myBets, status, startDate, endDate })
+          let status = pollStatesMap[await contract.methods.getDayState(i).call()]
+          // TODO: if status === 3 add listener to wbi event
+          let startDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * i) * 1000)
+          let endDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * (i + 1)) * 1000)
+          days.push({ bets, dayInformation, dayNumber: i, grandPrize, myBets, status, startDate, endDate })
         }
         this.commit('setPolls', { polls: days })
       }
 
       setTimeout(() => {
-        context.dispatch('fetchPolls')
+        console.log('polling---------------------')
+        dispatch('fetchPolls')
       }, 1000)
     },
 
     bet (context, { amount, ticker }) {
-      console.log(`Betting ${amount} to ${ticker}`)
+      const tickerCode = TOKENS.find(x => x.ticker.toLowerCase() === ticker.toLowerCase()).position
+      const web3 = context.state.web3
+      const from = web3.currentProvider.selectedAddress
+      const value = web3.utils.toWei(amount)
+      context.state.contractInstance.methods.placeBet(tickerCode).send({ from, value })
     }
   }
 })

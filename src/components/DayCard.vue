@@ -4,7 +4,7 @@
       <div class="row field">
         <header>
           <h1 class="day">{{ dayName }}</h1>
-          <h3 v-if="index <= 2" class="date">({{ endDate }})</h3>
+          <h3 v-if="index <= 2" class="date">({{ formatDate(endDate) }})</h3>
         </header>
         <main class="status" :class="[status]">{{ statusText }}</main>
       </div>
@@ -18,11 +18,14 @@
         <header>
           <h1>{{ prizeHeader }}</h1>
         </header>
-        <GrandPrice :prize="totalPrize" />
+        <GrandPrize :prize="grandPrize" />
       </div>
+      <v-btn v-if="status === 'RESOLVE' || status === 'RESOLVE'" @click="onClickResolve" color="primary">Resolve!</v-btn>
+      <v-btn v-if="status === 'PAYOUT'" @click="onClickPayout" color="primary">Withdraw!</v-btn>
     </div>
+
     <div class="column" v-if="status ==='PAYOUT'">
-      <TickersRanking/>
+      <TickersRanking />
     </div>
     <div class="column graph" v-else>
       <div class="row field">
@@ -33,12 +36,12 @@
       </div>
     </div>
 
-    <div class="column myBets" v-if="status ==='BET' && hasBets">
+    <div class="column myBets" v-if="status === 'BET' && hasBets">
       <div v-if="!showForm || isMediumViewport">
         <a v-if="!isMediumViewport" class="" @click="toggleForm">
           Add a prediction
         </a>
-        <MyBets />
+        <MyBets :bets="myBets" />
       </div>
       <div v-if="showForm || isMediumViewport">
         <a v-if="!isMediumViewport" @click="toggleForm">
@@ -58,25 +61,25 @@
 <script>
 import Graph from '@/components/Graph.vue'
 import Countdown from '@/components/Countdown.vue'
-import GrandPrice from '@/components/GrandPrice.vue'
+import GrandPrize from '@/components/GrandPrize.vue'
 import BetForm from '@/components/BetForm.vue'
 import MyBets from '@/components/MyBets.vue'
 import TickersRanking from '@/components/TickersRanking.vue'
 import { SMALL_VIEWPORT_BREAKPOINT, STATES } from '@/utils/constants'
+import { formatDate } from '@/utils/index'
 
 export default {
   name: 'dayCard',
   components: {
     Graph,
     Countdown,
-    GrandPrice,
+    GrandPrize,
     BetForm,
     MyBets,
     TickersRanking
   },
   data () {
     return {
-      hasBets: true,
       showForm: true
     }
   },
@@ -84,21 +87,21 @@ export default {
     STATES () {
       return STATES
     },
+    hasBets () {
+      return !!this.myBets
+    },
     isMediumViewport () {
       return window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     },
-    totalPrize () {
-      return Object.values(this.bets).reduce((acc, asset) => {
-        acc += parseInt(asset.amount)
-      }, 0)
-    },
     dayName () {
-      return this.index > 2 ? this.date : ['tomorrow', 'today', 'yesterday'][this.index]
+      return this.index > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.index]
     },
     statusText () {
       return {
         [STATES.BET]: 'Predictions are open',
         [STATES.WAIT]: 'Predictions closed: waiting for end of the day',
+        [STATES.RESOLVE]: 'Click below to resolve',
+        [STATES.WAIT_RESULT]: 'Predictions closed: waiting dr result',
         [STATES.PAYOUT]: 'Finalized'
       }[this.status] || 'Unknown status'
     },
@@ -137,9 +140,19 @@ export default {
     },
     endDate: {
       required: true
+    },
+    grandPrize: {
+      required: true
     }
   },
   methods: {
+    onClickResolve () {
+      this.$store.dispatch('resolve')
+    },
+    onClickPayout () {
+      this.$store.dispatch('payout')
+    },
+    formatDate,
     onResize () {
       this.isLargeViewport = window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     },

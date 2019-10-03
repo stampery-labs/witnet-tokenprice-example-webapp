@@ -10,6 +10,8 @@
 
 <script>
 import { STATES } from '@/utils/constants'
+import { pad } from '@/utils/index'
+
 export default {
   data: function () {
     return {
@@ -37,9 +39,7 @@ export default {
     }
   },
   methods: {
-    pad (input) {
-      return input < 10 ? '0' + input : input
-    }
+    pad
   }
 }
 </script>

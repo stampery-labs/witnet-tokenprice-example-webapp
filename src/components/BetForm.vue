@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     tickerName () {
-      return this.ticker ? this.ticker.name : ''
+      return this.ticker ? this.ticker.symbol : ''
     }
   },
   methods: {
@@ -89,7 +89,7 @@ export default {
       this.show = true
       this.$store.dispatch('bet', {
         amount: this.amount,
-        ticker: this.ticker.nameid
+        ticker: this.ticker.symbol
       })
 
       this.$refs.form.reset()

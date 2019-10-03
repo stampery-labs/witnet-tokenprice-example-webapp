@@ -35,6 +35,13 @@ export default {
     this.addLabels()
     this.addAxes()
   },
+  watch: {
+    dataset () {
+      this.animateLoad()
+      this.addLabels()
+      this.addAxes()
+    }
+  },
   data: () => ({
     svgWidth: 0,
     redrawToggle: true

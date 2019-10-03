@@ -57,8 +57,6 @@ export async function checkMetamaskStatus (web3) {
 export async function checkEthereumNetwork (web3) {
   if (web3) {
     const network = await web3.eth.net.getId()
-    console.log('network', network)
-    console.log('NET', ETHEREUM_NETWORK_ID)
     if (network !== ETHEREUM_NETWORK_ID) {
       throw Error(ERRORS.WRONG_NETWORK)
     }
@@ -80,7 +78,7 @@ export async function getContract (web3Provider) {
   }
 }
 
-export async function getTotalTokensAmountByDay (contractInstance, day) {
+export async function getTotalTokensAmountByDay (contractInstance, day, fromWeiFn) {
   const tokens = { }
 
   for (let token of TOKENS) {
@@ -88,9 +86,17 @@ export async function getTotalTokensAmountByDay (contractInstance, day) {
     tokens[token.ticker] = {
       name: token.name,
       ticker: token.ticker,
-      amount
+      amount: fromWeiFn(amount)
     }
   }
 
   return tokens
+}
+
+export function pad (input) {
+  return input < 10 ? '0' + input : input
+}
+
+export function formatDate (date) {
+  return `${date.getFullYear()}-${pad(date.getMonth())}-${pad(date.getDate())}`
 }
