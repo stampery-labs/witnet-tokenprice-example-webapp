@@ -60,7 +60,7 @@ export default new Vuex.Store({
       const requestFee = await context.state.contractInstance.methods.requestFee().call()
       const resultFee = await context.state.contractInstance.methods.resultFee().call()
       const value = requestFee + resultFee
-      await context.state.contractInstance.methods.resolve(day).send({from, value})
+      await context.state.contractInstance.methods.resolve(day).send({ from, value })
 
       setTimeout(() => {
         let interval = setInterval(() => {
@@ -75,7 +75,7 @@ export default new Vuex.Store({
     async payout (context, { day }) {
       const web3 = context.state.web3
       const from = web3.currentProvider.selectedAddress
-      await context.state.contractInstance.methods.payout(day).send({from, value: "0"})
+      await context.state.contractInstance.methods.payout(day).send({ from, value: '0' })
     },
     async web3Polling (context) {
       checkMetamaskStatus(context.state.web3)
@@ -136,7 +136,7 @@ export default new Vuex.Store({
             const dayInfoPromise = contract.methods.getDayInfo(i).call()
             const betsPromise = getTotalTokensAmountByDay(contract, i, fromWei)
             const myBetsPromise = state.contractInstance.methods.getMyBetsDayWins(i)
-              .call({from: state.web3.currentProvider.selectedAddress})
+              .call({ from: state.web3.currentProvider.selectedAddress })
               .then((response) => {
                 return [response[0].map((amount, index) => {
                   return { amount: fromWei(amount), ...TOKENS[index] }

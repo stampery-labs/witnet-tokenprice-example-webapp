@@ -25,7 +25,7 @@
     </div>
 
     <div class="column" v-if="status ==='PAYOUT'">
-      <TickersRanking />
+      <TickersRanking :ranking="ranking" :isVoid="isVoid"/>
     </div>
     <div class="column graph" v-else>
       <div class="row field">
@@ -95,6 +95,9 @@ export default {
     },
     volumesHeader () {
       return this.status === STATES.BET ? 'Current prediction volumes' : 'Final prediction volumes'
+    },
+    isVoid () {
+      return parseFloat(this.grandPrize) === 0
     }
   },
   props: {
@@ -133,6 +136,9 @@ export default {
     },
     remainingTime: {
       required: true
+    },
+    ranking: {
+      type: Array
     }
   },
   methods: {

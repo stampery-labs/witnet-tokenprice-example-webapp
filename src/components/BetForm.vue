@@ -14,7 +14,7 @@
       <label>I predict that the best performing crypto during tomorrow will be:</label>
       <v-autocomplete
         v-model="token"
-        :items="tickers"
+        :items="tokens"
         :rules="tickerRules"
         item-text="name"
         item-value="symbol"
@@ -57,7 +57,7 @@ export default {
       confirmSubmission: false,
       amountRules: [this.minimumAmount],
       tickerRules: [this.nonEmptyToken],
-      tickers: constants.TOKENS,
+      tokens: constants.TOKENS,
       valid: false,
       token: null,
       amount: '0.1',

@@ -26,6 +26,7 @@
         :myBets="poll.myBets"
         :myWins="poll.myWins"
         :remainingTime="poll.remainingTime"
+        :ranking="poll.dayInfo[1]"
       />
       </v-timeline-item>
     </v-timeline>

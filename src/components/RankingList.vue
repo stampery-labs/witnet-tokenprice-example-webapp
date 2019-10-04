@@ -2,18 +2,18 @@
   <v-list disabled>
     <v-list-item-group color="primary">
       <v-list-item
-        v-for="(ticker, i) in tickers"
+        v-for="(token, i) in tokens"
         :key="i"
       >
         <v-list-item-icon>
-          <v-img :src="`/tickers/${ticker.nameid}-thumb.png`" />
+          <v-img :src="`/tickers/${token.nameid}-thumb.png`" />
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>
-            {{ ticker.rank }}. {{ ticker.name }}
+            {{ token.rank }}. {{ token.name }}
           </v-list-item-title>
           <v-list-item-subtitle>
-            {{ ticker.symbol }}
+            {{ token.ticker }}
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
@@ -24,7 +24,7 @@
 <script>
 export default {
   props: {
-    tickers: Array
+    tokens: Array
   }
 }
 </script>

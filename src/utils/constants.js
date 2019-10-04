@@ -44,51 +44,61 @@ export const TOKENS = [
   {
     ticker: 'ALGO',
     name: 'Algorand',
+    nameid: 'algorand',
     position: 0
   },
   {
     ticker: 'BTC',
     name: 'Bitcoin',
+    nameid: 'bitcoin',
     position: 1
   },
   {
     ticker: 'EOS',
     name: 'EOSIO',
+    nameid: 'eosio',
     position: 2
   },
   {
     ticker: 'ETC',
     name: 'Ethereum Classic',
+    nameid: 'ethereum-classic',
     position: 3
   },
   {
     ticker: 'ETH',
     name: 'Ethereum',
+    nameid: 'ethereum',
     position: 4
   },
   {
     ticker: 'LINK',
     name: 'Chainlink',
+    nameid: 'chainlink',
     position: 5
   },
   {
     ticker: 'MKR',
     name: 'Maker',
+    nameid: 'maker',
     position: 6
   },
   {
     ticker: 'REP',
     name: 'Augur',
+    nameid: 'augur',
     position: 7
   },
   {
     ticker: 'XTZ',
     name: 'Tezos',
+    nameid: 'tezos',
     position: 8
   },
   {
     ticker: 'ZEC',
     name: 'Zcash',
+    nameid: 'zcash',
     position: 9
   }
 ]
