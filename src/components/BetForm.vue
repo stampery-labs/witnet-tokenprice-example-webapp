@@ -7,13 +7,13 @@
       <BetConfirmation
         :show="confirmSubmission"
         :amount="amount"
-        :ticker="tickerName"
+        :token="token"
         v-on:cancel-submit="cancelSubmit"
         v-on:confirm-submit="confirmSubmit"
       />
-      <label>I predict that the best performing crypto during the day of tomorrow will be:</label>
+      <label>I predict that the best performing crypto during tomorrow will be:</label>
       <v-autocomplete
-        v-model="ticker"
+        v-model="token"
         :items="tickers"
         :rules="tickerRules"
         item-text="name"
@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import tickers from '../data/tickers'
 import * as constants from '@/utils/constants'
 import BetConfirmation from '@/components/BetConfirmation'
 
@@ -57,17 +56,17 @@ export default {
       show: false,
       confirmSubmission: false,
       amountRules: [this.minimumAmount],
-      tickerRules: [this.nonEmptyTicker],
+      tickerRules: [this.nonEmptyToken],
       tickers: constants.TOKENS,
       valid: false,
-      ticker: null,
+      token: null,
       amount: '0.1',
       submitting: false
     }
   },
   computed: {
-    tickerName () {
-      return this.ticker ? this.ticker.symbol : ''
+    tokenName () {
+      return this.token ? this.token.ticker : 'Unknown token'
     }
   },
   methods: {
@@ -76,8 +75,8 @@ export default {
              `Minimum prediction amount is ${constants.MINIMUM_BET} ETH`
     },
 
-    nonEmptyTicker (ticker) {
-      return ticker ? true : 'Required'
+    nonEmptyToken (token) {
+      return token ? true : 'Required'
     },
 
     formatToken (token) {
@@ -92,15 +91,14 @@ export default {
       this.show = true
       this.$store.dispatch('bet', {
         amount: this.amount,
-        ticker: this.ticker.symbol
+        token: this.token
       })
-
       this.$refs.form.reset()
       this.resetData()
     },
     resetData () {
       this.valid = false
-      this.ticker = null
+      this.token = null
       this.amount = null
       this.submitting = false
       this.confirmSubmission = false

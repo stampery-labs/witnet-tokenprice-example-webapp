@@ -146,10 +146,18 @@ export default new Vuex.Store({
               return pollStatesMap[state]
             })
             // TODO: if status === 3 add listener to wbi event
-            const [dayInfo, bets, myBets, status] = await Promise.all([dayInfoPromise, betsPromise, myBetsPromise, statusPromise])
+            let [dayInfo, bets, myBets, status] = await Promise.all([dayInfoPromise, betsPromise, myBetsPromise, statusPromise])
             let startDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * i) * 1000)
             let endDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * (i + 1)) * 1000)
             let grandPrize = fromWei(dayInfo.grandPrize)
+            myBets = myBets.map((bet, i) => {
+              const myAmount = bet.amount
+              const winnerAmount = Object.values(bets)[i].amount
+              const myShare = winnerAmount > 0 ? grandPrize / winnerAmount : 0
+              const myPrize = myAmount * myShare
+              const multiplier = (winnerAmount >= 0 ? myPrize : parseFloat(grandPrize))
+              return { ...bet, multiplier }
+            })
             resolve({ bets, dayInfo, dayNumber: i, grandPrize, myBets, status, endDate, startDate, remainingTime: timeForTomorrow })
           })
           dayPromises.push(dayPromise)
@@ -159,16 +167,15 @@ export default new Vuex.Store({
 
         setTimeout(() => {
           dispatch('fetchPolls')
-        }, 10000)
+        }, 5000)
       }
     },
 
-    bet (context, { amount, ticker }) {
-      const tickerCode = TOKENS.find(x => x.ticker.toLowerCase() === ticker.toLowerCase()).position
+    bet (context, { amount, token }) {
       const web3 = context.state.web3
       const from = web3.currentProvider.selectedAddress
       const value = web3.utils.toWei(amount)
-      context.state.contractInstance.methods.placeBet(tickerCode).send({ from, value })
+      context.state.contractInstance.methods.placeBet(token.position).send({ from, value })
     }
   }
 })

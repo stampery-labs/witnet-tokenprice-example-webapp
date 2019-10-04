@@ -6,18 +6,17 @@
         class="mx-auto"
       >
         <v-card-text>
-          <p class="title" v-if="ticker">
-            Confirm bet of {{ amount }} to {{ ticker }}?
+          <p class="title" v-if="token">
+            Confirm prediction of {{ amount }} ETH to {{ token.name }} ({{ token.ticker }}) as the best performing currency of tomorrow?
           </p>
         </v-card-text>
 
         <v-card-actions class="justify-center">
-          <v-btn color="primary" class="mr-4" @click="confirmSubmit">
-            Place bet
-          </v-btn>
-
           <v-btn class="mr-4" @click="cancelSubmit">
             Cancel
+          </v-btn>
+          <v-btn color="primary" class="mr-4" @click="confirmSubmit">
+            Confirm prediction
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -28,7 +27,7 @@
 export default {
   props: {
     amount: String,
-    ticker: String,
+    token: Object,
     show: Boolean
   },
   methods: {

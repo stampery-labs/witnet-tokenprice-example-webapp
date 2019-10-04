@@ -5,208 +5,208 @@ function getRandomInt (max) {
 export const bets1 = [{
   address: '0x97BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '99.1',
-  ticker: 'eth'
+  token: 'eth'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'link'
+  token: 'link'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'rep'
+  token: 'rep'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'btc'
+  token: 'btc'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'bch'
+  token: 'bch'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'grin'
+  token: 'grin'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'ada'
+  token: 'ada'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'mkr'
+  token: 'mkr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'xmr'
+  token: 'xmr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '0.1',
-  ticker: 'xlm'
+  token: 'xlm'
 }
 ]
 
 export const bets2 = [{
   address: '0x97BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'eth'
+  token: 'eth'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'link'
+  token: 'link'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'rep'
+  token: 'rep'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'btc'
+  token: 'btc'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'bch'
+  token: 'bch'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'grin'
+  token: 'grin'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'ada'
+  token: 'ada'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'mkr'
+  token: 'mkr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'xmr'
+  token: 'xmr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'xlm'
+  token: 'xlm'
 }
 ]
 
 export const bets3 = [{
   address: '0x97BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'eth'
+  token: 'eth'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'link'
+  token: 'link'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'rep'
+  token: 'rep'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'btc'
+  token: 'btc'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'bch'
+  token: 'bch'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'grin'
+  token: 'grin'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'ada'
+  token: 'ada'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'mkr'
+  token: 'mkr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'xmr'
+  token: 'xmr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'xlm'
+  token: 'xlm'
 }
 ]
 
 export const bets4 = [{
   address: '0x97BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '25',
-  ticker: 'eth'
+  token: 'eth'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '5',
-  ticker: 'link'
+  token: 'link'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '10',
-  ticker: 'rep'
+  token: 'rep'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '15',
-  ticker: 'btc'
+  token: 'btc'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '8',
-  ticker: 'bch'
+  token: 'bch'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '7',
-  ticker: 'grin'
+  token: 'grin'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '4',
-  ticker: 'ada'
+  token: 'ada'
 },
 {
   address: '0x27BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '6',
-  ticker: 'mkr'
+  token: 'mkr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '9',
-  ticker: 'xmr'
+  token: 'xmr'
 },
 {
   address: '0x07BcBE5185A929FfBC493f3d7CF4692797029fF0',
   amount: '11',
-  ticker: 'xlm'
+  token: 'xlm'
 }]
 
 export const bets = [bets1, bets2, bets3, bets4, bets4, bets4, bets4]
