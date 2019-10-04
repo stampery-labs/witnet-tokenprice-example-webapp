@@ -55,10 +55,21 @@ export default new Vuex.Store({
   },
   actions: {
     async resolve (context, { day }) {
-      console.log('calling resolve!')
+      const response = await context.state.contractInstance.methods.resolve(day).call()
+      console.log('Response resolve', response)
+
+      setTimeout(() => {
+        let interval = setInterval(() => {
+          let isResultReady = context.state.contractInstance.methods.isResultReady(day).call()
+          if (isResultReady) {
+            clearInterval(interval)
+            context.dispatch('fetchPolls')
+          }
+        }, 1000 * 5)
+      }, 1000 * 60 * 3)
     },
-    async payout (context) {
-      console.log('calling payout!')
+    async payout (context, { day }) {
+      context.state.contractInstance.methods.payout(day).call()
     },
     async web3Polling (context) {
       checkMetamaskStatus(context.state.web3)
@@ -127,12 +138,12 @@ export default new Vuex.Store({
           days.push({ bets, dayInformation, dayNumber: i, grandPrize, myBets, status, startDate, endDate })
         }
         this.commit('setPolls', { polls: days })
-      }
 
-      setTimeout(() => {
-        console.log('polling---------------------')
-        dispatch('fetchPolls')
-      }, 1000)
+        setTimeout(() => {
+          console.log('polling---------------------')
+          dispatch('fetchPolls')
+        }, 1000)
+      }
     },
 
     bet (context, { amount, ticker }) {

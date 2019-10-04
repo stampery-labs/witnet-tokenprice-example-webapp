@@ -4,7 +4,7 @@
       <div class="row field">
         <header>
           <h1 class="day">{{ dayName }}</h1>
-          <h3 v-if="index <= 2" class="date">({{ formatDate(endDate) }})</h3>
+          <h3 v-if="dayNumber <= 2" class="date">({{ formatDate(endDate) }})</h3>
         </header>
         <main class="status" :class="[status]">{{ statusText }}</main>
       </div>
@@ -32,7 +32,7 @@
         <header>
           <h1>{{ volumesHeader }}</h1>
         </header>
-        <Graph xKey="ticker" yKey="amount" :dataset="Object.values(bets)" :index="index"/>
+        <Graph xKey="ticker" yKey="amount" :dataset="Object.values(bets)" :index="dayNumber"/>
       </div>
     </div>
 
@@ -94,7 +94,7 @@ export default {
       return window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     },
     dayName () {
-      return this.index > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.index]
+      return this.dayNumber > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.dayNumber]
     },
     statusText () {
       return {
@@ -131,7 +131,7 @@ export default {
       type: Object,
       required: true
     },
-    index: {
+    dayNumber: {
       type: Number,
       required: true
     },
@@ -147,10 +147,10 @@ export default {
   },
   methods: {
     onClickResolve () {
-      this.$store.dispatch('resolve')
+      this.$store.dispatch('resolve', { day: this.dayNumber })
     },
     onClickPayout () {
-      this.$store.dispatch('payout')
+      this.$store.dispatch('payout', { day: this.dayNumber })
     },
     formatDate,
     onResize () {

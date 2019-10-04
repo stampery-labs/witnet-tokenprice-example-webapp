@@ -21,7 +21,7 @@
         :bets="poll.bets"
         :status="poll.status"
         :data="poll.barChartData"
-        :index="index"
+        :dayNumber="index"
         :myBets="poll.myBets"
       />
       </v-timeline-item>
