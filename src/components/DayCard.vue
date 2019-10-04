@@ -21,7 +21,7 @@
         <GrandPrize :prize="grandPrize" />
       </div>
       <v-btn v-if="status === 'RESOLVE' || status === 'RESOLVE'" @click="onClickResolve" color="primary">Resolve!</v-btn>
-      <v-btn v-if="status === 'PAYOUT'" @click="onClickPayout" color="primary">Withdraw!</v-btn>
+      <v-btn v-if="status === ('WAIT_RESULT' || status === 'PAYOUT') && hasBets" @click="onClickPayout" color="primary">Withdraw!</v-btn>
     </div>
 
     <div class="column" v-if="status ==='PAYOUT'">
@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <div class="column myBets" v-if="status === 'BET' && hasBets">
+    <div class="column myBets" v-if="status === 'BET'">
       <div v-if="!showForm || isMediumViewport">
         <a v-if="!isMediumViewport" class="" @click="toggleForm">
           Add a prediction
@@ -88,7 +88,7 @@ export default {
       return STATES
     },
     hasBets () {
-      return !!this.myBets
+      return this.myBets.find((val) => val.amount !== "0")
     },
     isMediumViewport () {
       return window.innerWidth > SMALL_VIEWPORT_BREAKPOINT

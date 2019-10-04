@@ -92,7 +92,7 @@ export const TOKENS = [
   }
 ]
 
-export const ITEMS_PER_PAGE = 3
+export const ITEMS_PER_PAGE = 5
 
 // BET -> You can bet with no restriction
 // WAIT -> You have to wait until RESOLVE
