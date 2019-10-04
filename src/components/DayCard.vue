@@ -1,5 +1,5 @@
 <template>
-  <div v-resize="onResize" class="dayCard">
+  <div class="dayCard">
     <div class="column dayState">
       <div class="row field">
         <header>
@@ -36,24 +36,9 @@
       </div>
     </div>
 
-    <div class="column myBets" v-if="status === 'BET'">
-      <div v-if="showForm || isMediumViewport">
-        <a v-if="!isMediumViewport" @click="toggleForm">
-          Show my predictions
-        </a>
-        <BetForm />
-      </div>
-      <div v-if="!showForm || isMediumViewport">
-        <a v-if="!isMediumViewport" class="" @click="toggleForm">
-          Add a prediction
-        </a>
-        <MyBets :bets="myBets" />
-      </div>
-    </div>
-    <div class="column myBets" v-else>
-      <div>
-        <MyBets :bets="myBets" />
-      </div>
+    <div class="column myBets" >
+      <BetForm v-if="status === 'BET'" />
+      <MyBets :bets="myBets" />
     </div>
   </div>
 </template>
@@ -84,14 +69,8 @@ export default {
     }
   },
   computed: {
-    STATES () {
-      return STATES
-    },
     hasBets () {
       return this.myBets.find((val) => val.amount !== "0")
-    },
-    isMediumViewport () {
-      return window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     },
     dayName () {
       return this.dayNumber > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.dayNumber]
@@ -156,12 +135,6 @@ export default {
       this.$store.dispatch('payout', { day: this.dayNumber })
     },
     formatDate,
-    onResize () {
-      this.isLargeViewport = window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
-    },
-    toggleForm () {
-      this.showForm = !this.showForm
-    }
   }
 }
 </script>
