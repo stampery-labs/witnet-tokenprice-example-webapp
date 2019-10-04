@@ -7,6 +7,8 @@
       :headers="headers"
       :items="bets"
       :items-per-page="5"
+      sort-by="amount"
+      sort-desc=True
       height="300px"
     ></v-data-table>
   </div>
@@ -26,13 +28,13 @@ export default {
     return {
       headers: [
         {
-          text: 'Crypto asset',
+          text: 'Symbol',
           align: 'left',
           sortable: true,
           value: 'ticker'
         },
         {
-          text: 'Amount bet',
+          text: 'Amount',
           align: 'left',
           sortable: true,
           value: 'amount'
