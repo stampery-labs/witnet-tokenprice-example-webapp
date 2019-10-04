@@ -15,6 +15,7 @@
         :small="true"
       >
       <DayCard
+        :index="poll.index"
         :startDate="poll.startDate"
         :grandPrize="poll.grandPrize"
         :endDate="poll.endDate"

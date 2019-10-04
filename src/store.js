@@ -158,7 +158,7 @@ export default new Vuex.Store({
               const multiplier = (winnerAmount >= 0 ? myPrize : parseFloat(grandPrize))
               return { ...bet, multiplier }
             })
-            resolve({ bets, dayInfo, dayNumber: i, grandPrize, myBets, status, endDate, startDate, remainingTime: timeForTomorrow })
+            resolve({ index: lastDay - i, bets, dayInfo, dayNumber: i, grandPrize, myBets, status, endDate, startDate, remainingTime: timeForTomorrow })
           })
           dayPromises.push(dayPromise)
         }

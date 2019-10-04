@@ -50,7 +50,7 @@ import GrandPrize from '@/components/GrandPrize.vue'
 import BetForm from '@/components/BetForm.vue'
 import MyBets from '@/components/MyBets.vue'
 import TickersRanking from '@/components/TickersRanking.vue'
-import { SMALL_VIEWPORT_BREAKPOINT, STATES } from '@/utils/constants'
+import { STATES } from '@/utils/constants'
 import { formatDate } from '@/utils/index'
 
 export default {
@@ -73,7 +73,7 @@ export default {
       return this.myBets.find((val) => val.amount !== "0")
     },
     dayName () {
-      return this.dayNumber > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.dayNumber]
+      return this.index > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.index]
     },
     statusText () {
       return {
@@ -98,6 +98,10 @@ export default {
     }
   },
   props: {
+    index: {
+      type: Number,
+      required: true
+    },
     myBets: {
       type: Array,
       required: true
