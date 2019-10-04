@@ -121,28 +121,34 @@ export default new Vuex.Store({
       const fromWei = state.web3.utils.fromWei
       if (state.contractInstance) {
         const lastDay = await state.contractInstance.methods.getCurrentDay().call()
-        const days = []
+        const dayPromises = []
         for (let i = lastDay; i >= 0 && i > lastDay - ITEMS_PER_PAGE; i--) {
-          let dayInformation = await contract.methods.getDayInfo(i).call()
-          console.log('-----', dayInformation)
-          let grandPrize = fromWei(dayInformation.grandPrize)
-          let bets = await getTotalTokensAmountByDay(contract, i, fromWei)
-          let myBets = (await state.contractInstance.methods.getMyBetsDay(i).call()).map((amount, index) => {
-            return { amount: fromWei(amount), ...TOKENS[index] }
+          const dayPromise = new Promise(async (resolve, reject) => {
+            const dayInfoPromise = contract.methods.getDayInfo(i).call()
+            const betsPromise = getTotalTokensAmountByDay(contract, i, fromWei)
+            const myBetsPromise = state.contractInstance.methods.getMyBetsDay(i).call().then((amounts) => {
+              return amounts.map((amount, index) => {
+                return { amount: fromWei(amount), ...TOKENS[index] }
+              })
+            })
+            const statusPromise = contract.methods.getDayState(i).call().then((state) => {
+              return pollStatesMap[state]
+            })
+            // TODO: if status === 3 add listener to wbi event
+            const [dayInfo, bets, myBets, status] = await Promise.all([dayInfoPromise, betsPromise, myBetsPromise, statusPromise])
+            let startDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * i) * 1000)
+            let endDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * (i + 1)) * 1000)
+            let grandPrize = fromWei(dayInfo.grandPrize)
+            resolve({ bets, dayInformation: dayInfo, dayNumber: i, grandPrize, myBets, status, startDate, endDate })
           })
-
-          let status = pollStatesMap[await contract.methods.getDayState(i).call()]
-          // TODO: if status === 3 add listener to wbi event
-          let startDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * i) * 1000)
-          let endDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * (i + 1)) * 1000)
-          days.push({ bets, dayInformation, dayNumber: i, grandPrize, myBets, status, startDate, endDate })
+          dayPromises.push(dayPromise)
         }
+        const days = await Promise.all(dayPromises)
         this.commit('setPolls', { polls: days })
 
         setTimeout(() => {
-          console.log('polling---------------------')
           dispatch('fetchPolls')
-        }, 1000)
+        }, 10000)
       }
     },
 
