@@ -135,18 +135,18 @@ export default new Vuex.Store({
           const dayPromise = new Promise(async (resolve, reject) => {
             const dayInfoPromise = contract.methods.getDayInfo(i).call()
             const betsPromise = getTotalTokensAmountByDay(contract, i, fromWei)
-            const myBetsPromise = state.contractInstance.methods.getMyBetsDay(i)
+            const myBetsPromise = state.contractInstance.methods.getMyBetsDayWins(i)
               .call({from: state.web3.currentProvider.selectedAddress})
-              .then((amounts) => {
-                return amounts.map((amount, index) => {
+              .then((response) => {
+                return [response[0].map((amount, index) => {
                   return { amount: fromWei(amount), ...TOKENS[index] }
-                })
+                }), parseFloat(fromWei(response[1]))]
               })
             const statusPromise = contract.methods.getDayState(i).call().then((state) => {
               return pollStatesMap[state]
             })
             // TODO: if status === 3 add listener to wbi event
-            let [dayInfo, bets, myBets, status] = await Promise.all([dayInfoPromise, betsPromise, myBetsPromise, statusPromise])
+            let [dayInfo, bets, [myBets, myWins], status] = await Promise.all([dayInfoPromise, betsPromise, myBetsPromise, statusPromise])
             let startDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * i) * 1000)
             let endDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * (i + 1)) * 1000)
             let grandPrize = fromWei(dayInfo.grandPrize)
@@ -158,7 +158,7 @@ export default new Vuex.Store({
               const multiplier = (winnerAmount >= 0 ? myPrize : parseFloat(grandPrize))
               return { ...bet, multiplier }
             })
-            resolve({ index: lastDay - i, bets, dayInfo, dayNumber: i, grandPrize, myBets, status, endDate, startDate, remainingTime: timeForTomorrow })
+            resolve({ index: lastDay - i, bets, dayInfo, dayNumber: i, grandPrize, myBets, myWins, status, endDate, startDate, remainingTime: timeForTomorrow })
           })
           dayPromises.push(dayPromise)
         }

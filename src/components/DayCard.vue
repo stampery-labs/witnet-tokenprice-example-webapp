@@ -21,7 +21,7 @@
         <GrandPrize :prize="grandPrize" />
       </div>
       <v-btn v-if="status === 'RESOLVE' || status === 'RESOLVE'" @click="onClickResolve" color="primary">Resolve!</v-btn>
-      <v-btn v-if="status === ('WAIT_RESULT' || status === 'PAYOUT') && hasBets" @click="onClickPayout" color="primary">Withdraw!</v-btn>
+      <v-btn v-if="(status === 'WAIT_RESULT' || status === 'PAYOUT') && myWins > 0" @click="onClickPayout" color="primary">Withdraw {{myWins.toFixed(2)}} Eth</v-btn>
     </div>
 
     <div class="column" v-if="status ==='PAYOUT'">
@@ -104,6 +104,10 @@ export default {
     },
     myBets: {
       type: Array,
+      required: true
+    },
+    myWins: {
+      type: Number,
       required: true
     },
     status: {

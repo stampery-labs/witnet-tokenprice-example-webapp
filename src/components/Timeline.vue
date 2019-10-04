@@ -24,6 +24,7 @@
         :data="poll.barChartData"
         :dayNumber="poll.dayNumber"
         :myBets="poll.myBets"
+        :myWins="poll.myWins"
         :remainingTime="poll.remainingTime"
       />
       </v-timeline-item>
