@@ -18,6 +18,7 @@
 
 <script>
 import * as d3 from 'd3'
+import { TOKENS } from '@/utils/constants'
 
 export default {
   name: 'graph',
@@ -87,7 +88,7 @@ export default {
     },
     addAxes () {
       let x = d3.scaleBand()
-        .domain(['ATOM', 'BTC', 'ETC', 'ETH', 'GNT', 'LINK', 'MKR', 'REP', 'XTZ', 'ZEC'])
+        .domain(Object.values(TOKENS).map(token => token.ticker))
         .range([0, this.svgWidth])
 
       // Draw the axis

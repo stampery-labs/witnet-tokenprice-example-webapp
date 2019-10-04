@@ -39,10 +39,11 @@ export const ERRORS = {
 export const ADDRESS = '0xAfE1C0DaB27D692239981fFb9d5e6E6E53a755Fd'
 export const ABI = TokenPriceContestABI.abi
 
+// ALGO,BTC,EOS,ETC,ETH,LINK,MKR,REP,XTZ,ZEC
 export const TOKENS = [
   {
-    ticker: 'ATOM',
-    name: 'Cosmos',
+    ticker: 'ALGO',
+    name: 'Algorand',
     position: 0
   },
   {
@@ -51,18 +52,18 @@ export const TOKENS = [
     position: 1
   },
   {
+    ticker: 'EOS',
+    name: 'EOSIO',
+    position: 2
+  },
+  {
     ticker: 'ETC',
     name: 'Ethereum Classic',
-    position: 2
+    position: 3
   },
   {
     ticker: 'ETH',
     name: 'Ethereum',
-    position: 3
-  },
-  {
-    ticker: 'GNT',
-    name: 'Golem',
     position: 4
   },
   {
