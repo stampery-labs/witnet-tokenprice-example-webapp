@@ -54,6 +54,6 @@ h2 {
 
 .my-bets {
   min-width: 400px;
-
+  margin-bottom: -20px;
 }
 </style>
