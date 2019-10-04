@@ -8,7 +8,7 @@
       :items="bets"
       :items-per-page="5"
       sort-by="amount"
-      sort-desc=True
+      :sort-desc="true"
       height="300px"
     ></v-data-table>
   </div>
