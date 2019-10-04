@@ -1,5 +1,1 @@
-module.exports = {
-  publicPath: process.env.NODE_ENV === 'production'
-    ? 'witnet-tokenprice-example-webapp'
-    : '/'
-}
+module.exports = {}
