@@ -22,10 +22,10 @@
         required
       >
         <template v-slot:selection="data">
-          {{ formatTicker(data.item) }}
+          {{ formatToken(data.item) }}
         </template>
         <template v-slot:item="data">
-          {{ formatTicker(data.item) }}
+          {{ formatToken(data.item) }}
         </template>
       </v-autocomplete>
       <label>I'm supporting my prediction with this amount of ETH:</label>
@@ -58,7 +58,7 @@ export default {
       confirmSubmission: false,
       amountRules: [this.minimumAmount],
       tickerRules: [this.nonEmptyTicker],
-      tickers,
+      tickers: constants.TOKENS,
       valid: false,
       ticker: null,
       amount: '0.1',
@@ -80,8 +80,8 @@ export default {
       return ticker ? true : 'Required'
     },
 
-    formatTicker (ticker) {
-      return `${ticker.name} - ${ticker.symbol}`
+    formatToken (token) {
+      return `${token.name} - ${token.ticker}`
     },
 
     cancelSubmit () {
