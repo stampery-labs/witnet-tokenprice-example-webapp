@@ -24,7 +24,7 @@
       <v-btn v-if="(status === 'WAIT_RESULT' || status === 'PAYOUT') && myWins > 0" @click="onClickPayout" color="primary">Withdraw {{myWins.toFixed(2)}} Eth</v-btn>
     </div>
 
-    <div class="column" v-if="status ==='PAYOUT'">
+    <div class="column" v-if="showRanking">
       <TickersRanking :ranking="ranking" :isVoid="isVoid"/>
     </div>
     <div class="column graph" v-else>
@@ -98,6 +98,9 @@ export default {
     },
     isVoid () {
       return parseFloat(this.grandPrize) === 0
+    },
+    showRanking () {
+      return this.status === 'PAYOUT' || (this.status === 'WAIT_RESULT' && this.ranking.length > 0 && this.ranking.find((item) => parseInt(item) > 0))
     }
   },
   props: {

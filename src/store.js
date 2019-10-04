@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getWeb3, getContract, checkMetamaskStatus, checkEthereumNetwork, getTotalTokensAmountByDay } from './utils/index'
-import { TOKENS, ITEMS_PER_PAGE, pollStatesMap } from './utils/constants'
+import { TOKENS, ITEMS_PER_PAGE, pollStatesMap, STATES } from './utils/constants'
 // import { polls, bets } from '@/data/mock'
 Vue.use(Vuex)
 
@@ -158,6 +158,9 @@ export default new Vuex.Store({
               const multiplier = (winnerAmount >= 0 ? myPrize : parseFloat(grandPrize))
               return { ...bet, multiplier }
             })
+            if (status === STATES.WAIT_RESULT) {
+              dayInfo[1] = dayInfo[1].length > 0 ? dayInfo[1] : await state.contractInstance.methods.getRankingFromWitnet(i).call()
+            }
             resolve({ index: lastDay - i, bets, dayInfo, dayNumber: i, grandPrize, myBets, myWins, status, endDate, startDate, remainingTime: timeForTomorrow })
           })
           dayPromises.push(dayPromise)
