@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     syncedPrize () {
-      return parseFloat(this.prize)
+      return parseFloat(this.prize).toFixed(4)
     },
     usd () {
       return (this.syncedPrize * 175.60).toFixed(2)
