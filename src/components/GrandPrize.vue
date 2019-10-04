@@ -4,9 +4,9 @@
       {{ syncedPrize }}<span class="currency">ETH</span>
     </div>
     <ul class="fiat">
-      <li>{{ usd }}<span class="currency">USD</span></li>
-      <li>{{ eur }}<span class="currency">EUR</span></li>
-      <li>{{ jpy }}<span class="currency">JPY</span></li>
+      <li>~{{ usd }}<span class="currency">USD</span></li>
+      <li>~{{ eur }}<span class="currency">EUR</span></li>
+      <li>~{{ jpy }}<span class="currency">JPY</span></li>
     </ul>
   </div>
 </template>
@@ -52,10 +52,11 @@ export default {
   .currency {
     color: #999;
     font-size: .7em;
-    margin-left: .2em;
+    margin-left: .3em;
   }
   .fiat {
     color: #666;
+    font-size: 1.1rem;
     list-style-type: none;
     padding: 0;
     text-align: right;

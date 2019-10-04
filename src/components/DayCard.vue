@@ -37,17 +37,17 @@
     </div>
 
     <div class="column myBets" v-if="status === 'BET'">
-      <div v-if="!showForm || isMediumViewport">
-        <a v-if="!isMediumViewport" class="" @click="toggleForm">
-          Add a prediction
-        </a>
-        <MyBets :bets="myBets" />
-      </div>
       <div v-if="showForm || isMediumViewport">
         <a v-if="!isMediumViewport" @click="toggleForm">
           Show my predictions
         </a>
         <BetForm />
+      </div>
+      <div v-if="!showForm || isMediumViewport">
+        <a v-if="!isMediumViewport" class="" @click="toggleForm">
+          Add a prediction
+        </a>
+        <MyBets :bets="myBets" />
       </div>
     </div>
     <div class="column myBets" v-else>
@@ -215,7 +215,7 @@ export default {
       text-transform: uppercase;
       width: 100%;
       h1 {
-        color: #B3B3B3;
+        color: #888;
         display: inline;
         font-size: 1.1rem;
         &.day {
@@ -223,7 +223,7 @@ export default {
         }
       }
       .date {
-        color: #AAA;
+        color: #999;
         display: inline;
         font-size: .9rem;
         margin-left: 10px;

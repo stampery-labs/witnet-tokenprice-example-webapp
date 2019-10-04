@@ -1,7 +1,7 @@
 <template>
   <header>
-    <h1><img src="@/assets/logo.svg" alt="Here goes the logo" /></h1>
-    <h2>Predict today the best crypto of tomorrow and win numerous ETH prizes</h2>
+    <h1><a href="/"><img src="@/assets/logo.svg" alt="Here goes the logo" /></a></h1>
+    <h2>Predict today the best crypto of tomorrow and win numerous ETH prizes!</h2>
   </header>
 </template>
 
@@ -35,7 +35,7 @@ h2 {
   max-width: calc(100vw - 240px);
   position: absolute;
   top: 35px;
-  width: 500px;
+  width: 450px;
 }
 @media screen and (max-width: 959px) {
   h2 {

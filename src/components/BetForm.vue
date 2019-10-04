@@ -1,43 +1,46 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <BetConfirmation
-      :show="confirmSubmission"
-      :amount="amount"
-      :ticker="tickerName"
-      v-on:cancel-submit="cancelSubmit"
-      v-on:confirm-submit="confirmSubmit"
-    />
-    <v-text-field
-      v-model="amount"
-      :rules="amountRules"
-      label="Amount"
-      type="number"
-      prepend-icon="mdi-currency-eth"
-      required
-    ></v-text-field>
+  <v-row class="field betForm">
+    <header>
+      <h1>Predict tomorrow's best crypto</h1>
+    </header>
+    <v-form ref="form" v-model="valid">
+      <BetConfirmation
+        :show="confirmSubmission"
+        :amount="amount"
+        :ticker="tickerName"
+        v-on:cancel-submit="cancelSubmit"
+        v-on:confirm-submit="confirmSubmit"
+      />
+      <label>I predict that the best performing crypto during the day of tomorrow will be:</label>
+      <v-autocomplete
+        v-model="ticker"
+        :items="tickers"
+        :rules="tickerRules"
+        item-text="name"
+        item-value="symbol"
+        return-object
+        required
+      >
+        <template v-slot:selection="data">
+          {{ formatTicker(data.item) }}
+        </template>
+        <template v-slot:item="data">
+          {{ formatTicker(data.item) }}
+        </template>
+      </v-autocomplete>
+      <label>I'm supporting my prediction with this amount of ETH:</label>
+      <v-text-field
+        v-model="amount"
+        :rules="amountRules"
+        type="number"
+        required
+      ></v-text-field>
 
-    <v-autocomplete
-      v-model="ticker"
-      :items="tickers"
-      :rules="tickerRules"
-      item-text="name"
-      item-value="symbol"
-      label="Ticker"
-      return-object
-      required
-    >
-      <template v-slot:selection="data">
-        {{ formatTicker(data.item) }}
-      </template>
-      <template v-slot:item="data">
-        {{ formatTicker(data.item) }}
-      </template>
-    </v-autocomplete>
-
-    <v-btn :disabled="!valid || submitting" color="success" class="send" @click="submit">
-      Send prediction
-    </v-btn>
-  </v-form>
+      <v-btn :disabled="!valid || submitting" color="success" class="send" @click="submit">
+        Send prediction
+      </v-btn>
+    </v-form>
+  </v-row>
 </template>
 
 <script>
@@ -70,7 +73,7 @@ export default {
   methods: {
     minimumAmount (amount) {
       return amount >= constants.MINIMUM_BET ||
-             `Required minimum amount of: ${constants.MINIMUM_BET}`
+             `Minimum prediction amount is ${constants.MINIMUM_BET} ETH`
     },
 
     nonEmptyTicker (ticker) {
@@ -117,9 +120,23 @@ h2 {
   // height: 440px;
   background-color: antiquewhite;
 }
-.send {
-  padding: 30px !important;
-  width: 100%;
-  //background-color: #37c837 !important;
+.betForm {
+  header {
+    margin-bottom: 10px;
+  }
+  > form {
+    margin-bottom: 20px;
+    width: 100%;
+    label {
+      display: block;
+      font-size: 1.2rem;
+      margin: 0 0 -10px 0;
+    }
+    .send {
+      margin-top: 5px;
+      padding: 30px !important;
+      width: 100%;
+    }
+  }
 }
 </style>
