@@ -100,8 +100,8 @@ export default {
       return {
         [STATES.BET]: 'Predictions are open',
         [STATES.WAIT]: 'Predictions closed: waiting for end of the day',
-        [STATES.RESOLVE]: 'Click below to resolve',
-        [STATES.WAIT_RESULT]: 'Predictions closed: waiting dr result',
+        [STATES.RESOLVE]: 'Wait is over: click below to resolve',
+        [STATES.WAIT_RESULT]: 'Resolved: waiting for Witnet result',
         [STATES.PAYOUT]: 'Finalized'
       }[this.status] || 'Unknown status'
     },
