@@ -128,7 +128,7 @@ export default new Vuex.Store({
       const contract = state.contractInstance
       const fromWei = state.web3.utils.fromWei
       if (state.contractInstance) {
-        const lastDay = await state.contractInstance.methods.getCurrentDay().call()
+        const lastDay = parseInt(await state.contractInstance.methods.getCurrentDay().call())
         const dayPromises = []
         for (let i = lastDay; i >= 0 && i > lastDay - ITEMS_PER_PAGE; i--) {
           const dayPromise = new Promise(async (resolve, reject) => {
