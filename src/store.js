@@ -130,12 +130,13 @@ export default new Vuex.Store({
       if (state.contractInstance) {
         const lastDay = parseInt(await state.contractInstance.methods.getCurrentDay().call())
         const dayPromises = []
+        const timeForTomorrow = parseInt((state.contestPeriod - (((Date.now() / 1000) - parseInt(state.firstDayTimestamp)) % state.contestPeriod)) * 1000)
         for (let i = lastDay; i >= 0 && i > lastDay - ITEMS_PER_PAGE; i--) {
           const dayPromise = new Promise(async (resolve, reject) => {
             const dayInfoPromise = contract.methods.getDayInfo(i).call()
             const betsPromise = getTotalTokensAmountByDay(contract, i, fromWei)
             const myBetsPromise = state.contractInstance.methods.getMyBetsDay(i)
-              .call({from: web3.currentProvider.selectedAddress})
+              .call({from: context.state.web3.currentProvider.selectedAddress})
               .then((amounts) => {
                 return amounts.map((amount, index) => {
                   return { amount: fromWei(amount), ...TOKENS[index] }
@@ -149,7 +150,7 @@ export default new Vuex.Store({
             let startDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * i) * 1000)
             let endDate = new Date((parseInt(state.firstDayTimestamp) + parseInt(state.contestPeriod) * (i + 1)) * 1000)
             let grandPrize = fromWei(dayInfo.grandPrize)
-            resolve({ bets, dayInformation: dayInfo, dayNumber: i, grandPrize, myBets, status, startDate, endDate })
+            resolve({ bets, dayInfo, dayNumber: i, grandPrize, myBets, status, endDate, startDate, remainingTime: timeForTomorrow })
           })
           dayPromises.push(dayPromise)
         }

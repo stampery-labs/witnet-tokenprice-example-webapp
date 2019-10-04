@@ -1,6 +1,6 @@
 <template>
   <main class="home">
-    <Header v-if="" />
+    <Header />
     <Instructions v-if="showInstructions" v-on:close="onCloseInstructions" />
     <Timeline />
   </main>

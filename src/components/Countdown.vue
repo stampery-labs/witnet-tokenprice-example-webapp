@@ -1,5 +1,5 @@
 <template>
-  <countdown :time="time" :interval="100" tag="p" class="time" :class="[status]">
+  <countdown :time="time" :interval="100" tag="p" class="time">
     <template slot-scope="props" class="">
       <span class="number">{{ pad(props.hours) }}h </span>
       <span class="number">{{ pad(props.minutes) }}m </span>
@@ -19,23 +19,10 @@ export default {
     }
   },
   computed: {
-    time () {
-      return this.endDate - this.startDate
-    }
   },
   props: {
-    startDate: {
+    time: {
       required: true
-    },
-    endDate: {
-      required: true
-    },
-    status: {
-      required: true,
-      type: String,
-      validator: function (val) {
-        return Object.values(STATES).indexOf(val) !== -1
-      }
     }
   },
   methods: {

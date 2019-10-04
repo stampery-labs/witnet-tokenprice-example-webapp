@@ -12,7 +12,7 @@
         <header>
           <h1>{{ countdownHeader }}</h1>
         </header>
-        <Countdown :startDate="startDate" :endDate="endDate" :status="status" class="countdown" />
+        <Countdown :time="remainingTime" class="countdown" />
       </div>
       <div class="row field">
         <header>
@@ -142,6 +142,9 @@ export default {
       required: true
     },
     grandPrize: {
+      required: true
+    },
+    remainingTime: {
       required: true
     }
   },
