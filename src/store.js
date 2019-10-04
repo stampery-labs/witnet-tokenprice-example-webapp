@@ -127,7 +127,7 @@ export default new Vuex.Store({
           console.log('-----', dayInformation)
           let grandPrize = fromWei(dayInformation.grandPrize)
           let bets = await getTotalTokensAmountByDay(contract, i, fromWei)
-          let myBets = (await state.contractInstance.methods.getMyBetsDay(i).call()).map((amount, index) => {
+          let myBets = (await state.contractInstance.methods.getMyBetsDay(i).call({from: web3.currentProvider.selectedAddress})).map((amount, index) => {
             return { amount: fromWei(amount), ...TOKENS[index] }
           })
 
