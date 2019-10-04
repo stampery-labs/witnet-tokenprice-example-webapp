@@ -134,11 +134,13 @@ export default new Vuex.Store({
           const dayPromise = new Promise(async (resolve, reject) => {
             const dayInfoPromise = contract.methods.getDayInfo(i).call()
             const betsPromise = getTotalTokensAmountByDay(contract, i, fromWei)
-            const myBetsPromise = state.contractInstance.methods.getMyBetsDay(i).call().then((amounts) => {
-              return amounts.map((amount, index) => {
-                return { amount: fromWei(amount), ...TOKENS[index] }
+            const myBetsPromise = state.contractInstance.methods.getMyBetsDay(i)
+              .call({from: web3.currentProvider.selectedAddress})
+              .then((amounts) => {
+                return amounts.map((amount, index) => {
+                  return { amount: fromWei(amount), ...TOKENS[index] }
+                })
               })
-            })
             const statusPromise = contract.methods.getDayState(i).call().then((state) => {
               return pollStatesMap[state]
             })
