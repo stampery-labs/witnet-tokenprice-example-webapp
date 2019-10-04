@@ -48,9 +48,6 @@ export default {
       }
     })
   },
-  beforeCreate () {
-    // this.$store.dispatch('fetchPolls')
-  },
   methods: {
     getStatusColor (status) {
       return {
