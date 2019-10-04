@@ -110,8 +110,10 @@ export default new Vuex.Store({
     },
 
     async getDappConstants (context) {
-      const firstDayTimestamp = await context.state.contractInstance.methods.firstDay().call()
-      const contestPeriod = await context.state.contractInstance.methods.contestPeriod().call()
+      const [firstDayTimestamp, contestPeriod] = await Promise.all([
+        context.state.contractInstance.methods.firstDay().call(),
+        context.state.contractInstance.methods.contestPeriod().call()
+      ])
       context.commit('setDappConstants', { firstDayTimestamp, contestPeriod })
       context.dispatch('fetchPolls')
     },
