@@ -26,10 +26,10 @@ export default {
       return parseFloat(this.prize)
     },
     usd () {
-      return parseInt(this.syncedPrize * 175.60)
+      return (this.syncedPrize * 175.60).toFixed(2)
     },
     eur () {
-      return parseInt(this.syncedPrize * 160.30)
+      return (this.syncedPrize * 160.30).toFixed(2)
     },
     jpy () {
       return parseInt(this.syncedPrize * 18830.29)
