@@ -55,8 +55,12 @@ export default new Vuex.Store({
   },
   actions: {
     async resolve (context, { day }) {
-      const response = await context.state.contractInstance.methods.resolve(day).call()
-      console.log('Response resolve', response)
+      const web3 = context.state.web3
+      const from = web3.currentProvider.selectedAddress
+      const requestFee = await context.state.contractInstance.methods.requestFee().call()
+      const resultFee = await context.state.contractInstance.methods.resultFee().call()
+      const value = requestFee + resultFee
+      await context.state.contractInstance.methods.resolve(day).send({from, value})
 
       setTimeout(() => {
         let interval = setInterval(() => {
@@ -69,7 +73,9 @@ export default new Vuex.Store({
       }, 1000 * 60 * 3)
     },
     async payout (context, { day }) {
-      context.state.contractInstance.methods.payout(day).call()
+      const web3 = context.state.web3
+      const from = web3.currentProvider.selectedAddress
+      await context.state.contractInstance.methods.payout(day).send({from, value: "0"})
     },
     async web3Polling (context) {
       checkMetamaskStatus(context.state.web3)
