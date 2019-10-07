@@ -32,7 +32,12 @@
         <header>
           <h1>{{ volumesHeader }}</h1>
         </header>
-        <NewChart :bets="bets" />
+
+        <div class="small">
+          <NewChart :bets="bets" :options="
+             { responsive: true, maintainAspectRatio: false, legend: {display: false }, tooltips: { enabled: false }} "
+          />
+        </div>
       </div>
     </div>
     <div class="column myBets" v-if="status === 'BET' && hasBets">
@@ -309,5 +314,9 @@ export default {
       border-top: 1px solid #DDD;
     }
   }
+}
+
+.small {
+  max-width: 60vw;
 }
 </style>

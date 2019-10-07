@@ -132,7 +132,7 @@ h2 {
     }
     .send {
       margin-top: 5px;
-      padding: 30px !important;
+      height: 48px;
       width: 100%;
     }
   }

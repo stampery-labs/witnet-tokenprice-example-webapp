@@ -10,11 +10,19 @@ export default {
   props: {
     bets: {
       required: true
+    },
+    options: {
+      required: true
     }
   },
   watch: {
     bets () {
       this.fillData()
+    }
+  },
+  data () {
+    return {
+
     }
   },
   methods: {
@@ -27,7 +35,7 @@ export default {
         datasets: [
           {
             label: '',
-            backgroundColor: '#f879897',
+            backgroundColor: '#ffcc00',
             data: [
               parseFloat(this.bets['ALGO'].amount).toFixed(3),
               parseFloat(this.bets['BTC'].amount).toFixed(3),
@@ -47,9 +55,8 @@ export default {
   },
   mounted () {
     this.fillData()
+    console.log('options----->', this.options)
     this.renderChart(this.chartData, this.options)
   }
 }
 </script>
-
-<style>
