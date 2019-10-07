@@ -36,7 +36,7 @@ export const ERRORS = {
   CONTRACT_NOT_AVAILABLE: 'CONTRACT_NOT_AVAILABLE'
 }
 
-export const ADDRESS = '0xfb2Bf2c7562783d14Cea656b3b50cEd2069fE146'
+export const ADDRESS = '0x5f0aBcb84A2dB73Ed9A5b3192a2aD0A7E6aDA716'
 export const ABI = TokenPriceContestABI.abi
 
 // ALGO,BTC,EOS,ETC,ETH,LINK,MKR,REP,XTZ,ZEC
@@ -105,12 +105,6 @@ export const TOKENS = [
 
 export const ITEMS_PER_PAGE = 5
 
-// BET -> You can bet with no restriction
-// WAIT -> You have to wait until RESOLVE
-// RESOLVE -> You can click the button to resolve market
-// WAIT_RESULT -> You have to listen the wbi event or read the state of the wbi. If result is true show Button to withdraw. The states changes auto to PAYOUT
-// PAYOUT -> You can withdraw. Show button
-// INVALID -> You are trying to read a future day
 export const STATES = {
   BET: 'BET',
   WAIT: 'WAIT',
