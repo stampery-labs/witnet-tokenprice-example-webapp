@@ -1,7 +1,7 @@
 <template>
   <div ref="container" id="container" class="svg-container">
     <svg :class="'poll' + index" v-if="redrawToggle === true" :width="svgWidth" :height="svgHeight + 20">
-        <g>
+        <g class="main">
           <rect
             v-for="item in dataset"
             class="bar-positive"
@@ -39,7 +39,6 @@ export default {
   watch: {
     dataset () {
       this.animateLoad()
-      this.addLabels()
       this.addAxes()
     }
   },
@@ -53,6 +52,7 @@ export default {
         .selectAll('rect')
         .data(this.dataset)
         .transition()
+        .attr('transform', 'scale(0.9)')
         .delay((d, i) => {
           return i * 150
         })
@@ -71,9 +71,9 @@ export default {
       d3.select('.poll' + this.index)
         .select('g')
         .selectAll('text')
+        .text((d) => d[this.yKey] + ' \u039E')
         .data(this.dataset)
         .enter()
-        .append('text')
         .text((d) => d[this.yKey] + ' \u039E')
         .attr('x', d => {
           return this.xScale(d[this.xKey]) + this.svgWidth / 20
@@ -81,20 +81,28 @@ export default {
         .attr('y', d => {
           return this.yScale(d[this.yKey]) + this.svgWidth / 20
         })
-        .attr('text-anchor', 'middle')
-        .attr('fill', 'white')
-        .attr('font-size', '14')
-        .attr('font-weight', '700')
     },
     addAxes () {
       let x = d3.scaleBand()
         .domain(Object.values(TOKENS).map(token => token.ticker))
         .range([0, this.svgWidth])
 
-      // Draw the axis
+      let y = d3.scaleLinear()
+        .domain([this.dataMin, this.dataMax])
+        .range([this.svgHeight, 0])
+      // Draw the axisY
       d3.select('.poll' + this.index)
         .append('g')
-        .attr('transform', 'translate(0,' + this.svgHeight + ')')
+        // .attr('transform', 'translate(30,0)')
+        .call(d3.axisLeft(y))
+      d3.selectAll('.tick text')
+        .attr('font-weight', '700')
+        .attr('fill', '#616161')
+        .attr('color', '#616161')
+      // Draw the axisX
+      d3.select('.poll' + this.index)
+        .append('g')
+        .attr('transform', 'translate(30,' + this.svgHeight + ')')
         .call(d3.axisBottom(x))
         .selectAll('text')
         .attr('class', 'x axis')
@@ -174,6 +182,9 @@ export default {
   display: block;
   position: relative;
   width: 100%;
+}
+.main {
+  margin: 30px;
 }
 
 svg text {

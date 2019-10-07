@@ -1,10 +1,10 @@
 <template>
-  <div class="dayCard">
+  <div v-resize="onResize" class="dayCard">
     <div class="column dayState">
       <div class="row field">
         <header>
           <h1 class="day">{{ dayName }}</h1>
-          <h3 v-if="dayNumber <= 2" class="date">({{ formatDate(endDate) }})</h3>
+          <h3 v-if="index <= 2" class="date">({{ formatDate(endDate) }})</h3>
         </header>
         <main class="status" :class="[status]">{{ statusText }}</main>
       </div>
@@ -12,7 +12,7 @@
         <header>
           <h1>{{ countdownHeader }}</h1>
         </header>
-        <Countdown :time="remainingTime" class="countdown" />
+        <Countdown :time="remainingTime" :startDate="startDate" :endDate="endDate" :status="status" class="countdown" />
       </div>
       <div class="row field">
         <header>
@@ -32,31 +32,47 @@
         <header>
           <h1>{{ volumesHeader }}</h1>
         </header>
-        <Graph xKey="ticker" yKey="amount" :dataset="Object.values(bets)" :index="dayNumber"/>
+        <NewChart :bets="bets" />
       </div>
     </div>
-
-    <div class="column myBets" >
-      <BetForm v-if="status === 'BET'" />
-      <MyBets :bets="myBets" />
+    <div class="column myBets" v-if="status === 'BET' && hasBets">
+      <div v-if="!showForm || isMediumViewport">
+        <a v-if="!isMediumViewport" class="" @click="toggleForm">
+          Add a prediction
+        </a>
+        <MyBets :bets="myBets" />
+      </div>
+      <div v-if="showForm || isMediumViewport">
+        <a v-if="!isMediumViewport" @click="toggleForm">
+          Show my predictions
+        </a>
+        <BetForm />
+      </div>
+    </div>
+    <div class="column myBets" v-else>
+      <div>
+        <MyBets :bets="myBets" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Graph from '@/components/Graph.vue'
+import NewChart from '@/components/NewChart.vue'
 import Countdown from '@/components/Countdown.vue'
 import GrandPrize from '@/components/GrandPrize.vue'
 import BetForm from '@/components/BetForm.vue'
 import MyBets from '@/components/MyBets.vue'
 import TickersRanking from '@/components/TickersRanking.vue'
-import { STATES } from '@/utils/constants'
+import { STATES, SMALL_VIEWPORT_BREAKPOINT } from '@/utils/constants'
 import { formatDate } from '@/utils/index'
 
 export default {
   name: 'dayCard',
   components: {
-    Graph,
+    // Graph,
+    NewChart,
+    Chart,
     Countdown,
     GrandPrize,
     BetForm,
@@ -69,8 +85,14 @@ export default {
     }
   },
   computed: {
+    STATES () {
+      return STATES
+    },
     hasBets () {
-      return this.myBets.find((val) => val.amount !== "0")
+      return !!this.myBets
+    },
+    isMediumViewport () {
+      return window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
     },
     dayName () {
       return this.index > 2 ? formatDate(this.endDate) : ['tomorrow', 'today', 'yesterday'][this.index]
@@ -79,8 +101,8 @@ export default {
       return {
         [STATES.BET]: 'Predictions are open',
         [STATES.WAIT]: 'Predictions closed: waiting for end of the day',
-        [STATES.RESOLVE]: 'Wait is over: click below to resolve',
-        [STATES.WAIT_RESULT]: 'Resolved: waiting for Witnet result',
+        [STATES.RESOLVE]: 'Click below to resolve',
+        [STATES.WAIT_RESULT]: 'Predictions closed: waiting dr result',
         [STATES.PAYOUT]: 'Finalized'
       }[this.status] || 'Unknown status'
     },
@@ -124,10 +146,6 @@ export default {
       type: Object,
       required: true
     },
-    dayNumber: {
-      type: Number,
-      required: true
-    },
     startDate: {
       required: true
     },
@@ -146,12 +164,18 @@ export default {
   },
   methods: {
     onClickResolve () {
-      this.$store.dispatch('resolve', { day: this.dayNumber })
+      this.$store.dispatch('resolve')
     },
     onClickPayout () {
-      this.$store.dispatch('payout', { day: this.dayNumber })
+      this.$store.dispatch('payout')
     },
     formatDate,
+    onResize () {
+      this.isLargeViewport = window.innerWidth > SMALL_VIEWPORT_BREAKPOINT
+    },
+    toggleForm () {
+      this.showForm = !this.showForm
+    }
   }
 }
 </script>
@@ -208,7 +232,7 @@ export default {
       text-transform: uppercase;
       width: 100%;
       h1 {
-        color: #888;
+        color: #B3B3B3;
         display: inline;
         font-size: 1.1rem;
         &.day {
@@ -216,7 +240,7 @@ export default {
         }
       }
       .date {
-        color: #999;
+        color: #AAA;
         display: inline;
         font-size: .9rem;
         margin-left: 10px;
@@ -259,6 +283,30 @@ export default {
     .myBets {
       border-top: 1px solid #DDD;
       grid-column-start: span 2;
+    }
+  }
+}
+
+@media screen and (max-width: 959px) {
+  .dayCard {
+    display: flex;
+    flex-direction: column;
+    &:before {
+      display: none;
+    }
+    .dayState {
+      display: flex;
+      flex-direction: column;
+      width: 70vw;
+      .row {
+        display: flex;
+        flex-direction: column;
+        width: 50vw;
+      }
+    }
+    .column:not(:last-child) {
+      border-right: 0;
+      border-top: 1px solid #DDD;
     }
   }
 }

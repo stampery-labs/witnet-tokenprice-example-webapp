@@ -127,7 +127,7 @@ h2 {
     width: 100%;
     label {
       display: block;
-      font-size: 1.2rem;
+      font-size: 1.2em;
       margin: 0 0 -10px 0;
     }
     .send {

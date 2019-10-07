@@ -145,4 +145,18 @@ export default {
       transform: translate(19px, 0);
     }
   }
+  @media screen and (max-width: 600px) {
+    .timeline {
+      padding-top: 10vh;
+    }
+    .v-timeline-item {
+      display: flex;
+      justify-content: center;
+    }
+    .v-timeline-item__divider {
+      min-width: 60px;
+      background-color: blue;
+      display: none;
+    }
+  }
 </style>

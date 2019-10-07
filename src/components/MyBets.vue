@@ -4,6 +4,7 @@
       <h1>My predictions</h1>
     </header>
     <v-data-table
+      class="table"
       :headers="headers"
       :items="bets.map((bet) => ({ ...bet, amount: `${parseFloat(bet.amount).toFixed(2)} ETH`, multiplier: `${bet.multiplier.toFixed(2)} ETH` }))"
       :items-per-page="5"
@@ -52,14 +53,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  width: 400px;
-  height: 440px;
-  background-color:azure;
-}
-
-.my-bets {
-  min-width: 400px;
-  margin-bottom: -20px;
-}
+  .table {
+    margin-top: 20px;
+  }
 </style>

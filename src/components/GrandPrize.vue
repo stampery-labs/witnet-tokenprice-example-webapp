@@ -69,5 +69,17 @@ export default {
     width: 100%;
   }
 }
+@media screen and (max-width: 600px) {
+  .grand-prize {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    .eth {
+      display: flex;
+      flex-direction: column;
+      width: 50vw;
+    }
+  }
+}
 
 </style>
