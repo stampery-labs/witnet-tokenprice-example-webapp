@@ -55,7 +55,6 @@ export default {
   },
   mounted () {
     this.fillData()
-    console.log('options----->', this.options)
     this.renderChart(this.chartData, this.options)
   }
 }

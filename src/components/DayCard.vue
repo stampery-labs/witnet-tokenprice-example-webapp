@@ -169,10 +169,12 @@ export default {
   },
   methods: {
     onClickResolve () {
-      this.$store.dispatch('resolve')
+      console.log('day', this.index)
+      console.log('status', this.status)
+      this.$store.dispatch('resolve', { day: this.index })
     },
     onClickPayout () {
-      this.$store.dispatch('payout')
+      this.$store.dispatch('payout', { day: this.index })
     },
     formatDate,
     onResize () {
